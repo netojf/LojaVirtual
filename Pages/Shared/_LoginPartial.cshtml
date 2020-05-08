@@ -1,0 +1,30 @@
+﻿@page "{handler?}"
+
+@model LojaVirtual._LoginPartialModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<ul class="navbar-nav">
+    @if (LoginManagement.IsLogged)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="../Index" title="Manage">Hello @LoginManagement.TempUser.Name!</a>
+        </li>
+        <li class="nav-item">
+            <form asp-page-handler="logoff" method="post" asp-page="/Shared/_LoginPartial">
+                <button class="nav-link text-dark btn btn-default" title="Manage">Log Off</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/User/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/User/Login">Login</a>
+        </li>
+    }
+</ul>

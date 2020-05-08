@@ -1,0 +1,110 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace LojaVirtual
+{
+    public class LoginModel : PageModel
+    {
+        private readonly LojaVirtual.Models.LojaVirtualContext _context;
+        [BindProperty]
+        public Models.User tempUser { get; set; }
+
+        public LoginModel(LojaVirtual.Models.LojaVirtualContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult OnGet()
+        {
+            try
+            {
+                // Verification.  
+                if (LoginManagement.IsLogged)
+                {
+                    // Home Page.  
+                    return this.RedirectToPage("../Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Info  
+                Console.Write(ex);
+            }
+            return this.Page();
+        }
+
+        public async Task<IActionResult> OnPostLogIn()
+        {
+
+            try
+            {
+                // Verification.  
+                if (ModelState.IsValid)
+                {
+                    // Initialization.  
+                    var loginInfo = LoginManagement.Login(tempUser.Name,tempUser.Password);
+
+                    if (LoginManagement.Login(tempUser.Name, tempUser.Password))
+                    {
+                        HttpContext.Session.SetString("username", tempUser.Name);
+                        return RedirectToPage("../Index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                        return Page();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Info  
+                Console.Write(ex);
+            }
+
+            // Info.  
+            return this.Page();
+        }
+
+        #region Sign In method.  
+
+        /// <summary>  
+        /// Sign In User method.  
+        /// </summary>  
+        /// <param name="username">Username parameter.</param>  
+        /// <param name="isPersistent">Is persistent parameter.</param>  
+        /// <returns>Returns - await task</returns>  
+        private async Task SignInUser(string username, bool isPersistent)
+        {
+            // Initialization.  
+            var claims = new List<Claim>();
+
+            try
+            {
+                // Setting  
+                claims.Add(new Claim(ClaimTypes.Name, username));
+                var claimIdenties = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimPrincipal = new ClaimsPrincipal(claimIdenties);
+                var authenticationManager = Request.HttpContext;
+
+                // Sign In.  
+                await authenticationManager.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimPrincipal, new AuthenticationProperties() { IsPersistent = isPersistent });
+            }
+            catch (Exception ex)
+            {
+                // Info  
+                throw ex;
+            }
+        }
+
+        #endregion
+    }
+}

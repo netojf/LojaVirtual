@@ -1,0 +1,20 @@
+﻿@*@page "{Handler?}" - Retirado para acessar ao model*@  
+@model LojaVirtual._SidePanelModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<h1 class="my-4">LojaVirtual</h1>
+<div class="list-group">
+    @{
+        using (Models.LojaVirtualContext lojaVirtualContext = new Models.LojaVirtualContext())
+        {
+            foreach (var item in lojaVirtualContext.Categories)
+            {
+                <a asp-page="/Product/ProductView" asp-page-handler="Populate" asp-route-id="@item.CategoryId" class="dropdown-item">@item.Name</a>
+
+            }
+        }
+    }
+</div>
