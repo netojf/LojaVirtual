@@ -5,87 +5,120 @@
     ViewData["Title"] = "ProductDetail";
 }
 
-<div class="container">
+    <div class="container-fluid ">
 
+        <div class="row">
+            <img  class="mx-auto my-2 img" src="http://placehold.it/900x400" alt="">
 
+            <div class="row  card-body">
+                <div class="card col-sm-9 ">
+                    <div class="m-4">
+                        <h3 class="card-title ">@Model.Product.Name</h3>
+                        <p class="card-text">@Model.Product.Description</p>
+                        <h4>R$ @Model.Product.Price</h4>
+                    </div>
+                </div>
 
-    <div class="row">
+                <div class="card col-sm m-0 p-0">
+                    <form class="card-body m-0" action="/" method="post">
 
-        <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
-            <div class="card-body">
-                <h3 class="card-title ">@Model.Product.Name</h3>
-                <h4>R$ @Model.Product.Price</h4>
-                <p class="card-text">@Model.Product.Description</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                <span class="text-warning">★ ★ ★ ★ ☆</span>
-                4.0 stars
+                        <div class="card-body">
+                            <div class="row"><label>Quantidade</label></div class="row">
+                            <div class="row">
+                                <input type="number" class="form-control col" min="1">
+                            </div class="row">                        </div>
+
+                        <div class="card-body">
+                            <div class="row"><button type="submit" class="btn btn-danger p-2 m-1 col"><span class=""></span>Adicionar a Lista de Desejos</button></div>
+                            <div class="row"><button type="submit" class="btn btn-primary p-2 m-1 col">Adicionar ao Carrinho</button></div>
+                            <div class="row"><button type="submit" class="btn btn-success p-4 m-1 col">Comprar</button></div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
+
         </div>
 
         <!-- #region Related  -->
 
-        <div class="container card my-5">
-            <h3 class="my-4">Related Projects</h3>
+        <div class="container my-5">
+            <h3 class="my-4">Relacionados</h3>
 
-            <div class="row card-body">
+            <div class="row align-items-center">
 
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <a href="#">
-                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
+                    <a href="#" style="color:#000000; text-decoration:none">
+
+                        <img class="img-fluid" src="http://placehold.it/300x200" alt="">
+
+                        <div class="card-body">
+                            <h3 class="card-title">Title</h3>
+                            <h4 class="card-text">R$ value</h4>
+                        </div>
+
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
+                    <a href="#" style="color:#000000; text-decoration:none">
+
+                        <img class="img-fluid" src="http://placehold.it/300x200" alt="">
+
+                        <div class="card-body">
+                            <h3 class="card-title">Title</h3>
+                            <h4 class="card-text">R$ value</h4>
+                        </div>
+
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
+                    <a href="#" style="color:#000000; text-decoration:none">
+
+                        <img class="img-fluid" src="http://placehold.it/300x200" alt="">
+
+                        <div class="card-body">
+                            <h3 class="card-title">Title</h3>
+                            <h4 class="card-text">R$ value</h4>
+                        </div>
+
                     </a>
                 </div>
 
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <a href="#">
-                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-                    </a>
-                </div>
-
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <a href="#">
-                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-                    </a>
-                </div>
-
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <a href="#">
-                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-                    </a>
-                </div>
 
             </div>
-            <!-- /.row -->
 
         </div>
+        <!-- #endregion -->
+        <!-- #region Product Review -->
 
+        <div class="card card-outline-secondary my-4">
+            <div class="card-header">
+                Comentários
+            </div>
+
+            <div class="card-body">
+                <form action="/" method="post">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Digite seu Comentário Aqui!</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+                <hr>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                <hr>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                <hr>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+
+
+            </div>
+        </div>
 
         <!-- #endregion -->
 
     </div>
-
-    <!-- #region Product Review -->
-
-    <div class="card card-outline-secondary my-4">
-        <div class="card-header">
-            Product Reviews
-        </div>
-        <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <a href="#" class="btn btn-success">Leave a Review</a>
-        </div>
-    </div>
-
-    <!-- #endregion -->
-
-</div>
-
 

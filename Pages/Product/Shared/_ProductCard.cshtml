@@ -1,4 +1,4 @@
-﻿@*@page - retirado para acessar o model*@
+﻿@*@page*@ 
 @model LojaVirtual._ProductCardModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,7 +9,7 @@
         <div class="card-deck flex-row ">
             <div class="card h-100">
 
-                <a asp-page="/Product/ProductDetail" asp-page-handler="" asp-route-id="@Model.Product.ProductId"    class="flex-row" style="color:#000000; text-decoration:none" >
+                <a asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId"    class="flex-row" style="color:#000000; text-decoration:none" >
 
                     <!-- #region Image -->
                     <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
@@ -30,20 +30,23 @@
                 <!-- #region Controls -->
 
                 <div class="d-flex justify-content-center">
-                    <form class="form-inline">
+                    @*<a asp-page-handler="AddShoppingCartItem" asp-route-product="@Model.Product" class="btn btn-info mb-1 btn-block">Adicionar ao Carrinho</a>*@
+
+                    <form class="form-inline" method="post">
 
                         <div class="form-group col-auto">
-                            <button type="submit" class="btn btn-info mb-2">Adicionar ao Carrinho</button>
+                            <button  asp-page-handler="AddShoppingCartItem" asp-route-product="@Model.Product" type="submit" class="btn btn-info mb-1 btn-block">Adicionar ao Carrinho</button>
                         </div>
 
                         <div class="form-group col-auto">
-                            <button type="submit" class="btn btn-danger mb-2">Adicionar aos Favoritos</button>
+                            <button type="submit" asp-page-handler="AddShoppingCartItem" asp-route-product="@Model.Product" class="btn btn-danger mb-1 btn-block">Adicionar aos Favoritos</button>
                         </div>
 
                     </form>
                 </div>
 
                 <!-- #endregion -->
+
                 <!-- #region Classification -->
                 @* todo: classification of the products
         <div class="card-footer">
@@ -57,19 +60,4 @@
     </div>
 </div>
 
-@*<div class="col-lg-4 col-md-6 mb-4">
-    <div class="container">
-        <div class="card-deck flex-row flex-nowrap">
-            <a href="http://google.com">
-                <div class="card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Alberobello_BW_2016-10-16_13-43-03.jpg/250px-Alberobello_BW_2016-10-16_13-43-03.jpg" alt="Card image cap">
 
-                    <div class="card-body">
-                        <h3 class="card-sub align-middle">Card Title</h3>
-                        <p class="time-card">2 Days Ago</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>*@

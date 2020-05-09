@@ -13,7 +13,6 @@
             foreach (var item in lojaVirtualContext.Categories)
             {
                 <a asp-page="/Product/ProductView" asp-page-handler="Populate" asp-route-id="@item.CategoryId" class="dropdown-item">@item.Name</a>
-
             }
         }
     }

@@ -9,12 +9,34 @@
 <ul class="navbar-nav">
     @if (LoginManagement.IsLogged)
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="../Index" title="Manage">Hello @LoginManagement.TempUser.Name!</a>
+        <li class="d-flex nav-item align-items-center">
+            <p  class=" text-dark align-middle m-2">Bem Vindo(a)!  @LoginManagement.TempUser.Name!</p>
         </li>
-        <li class="nav-item">
-            <form asp-page-handler="logoff" method="post" asp-page="/Shared/_LoginPartial">
-                <button class="nav-link text-dark btn btn-default" title="Manage">Log Off</button>
+        <li class="nav-item m-1 row">
+            <a asp-page="/Shopping-Cart/ShoppingCart" asp-page-handler="Get" class="nav-link text-dark" >
+                <span style="font-size: 1em;">
+                    <i class="fas fa-shopping-cart"></i>
+                </span>
+                Carrinho
+            </a>
+        </li>
+        <li class="nav-item m-1 row">
+            <a class="nav-link text-dark" asp-page="../Index">
+                <span style="font-size: 1em;">
+                    <i class="fas fa-user"></i>
+                </span>
+                Conta
+            </a>
+        </li>
+
+        <li class="nav-item m-1 row">
+            <form class="form-inline" asp-page-handler="logoff" method="post" asp-page="/Shared/_LoginPartial">
+
+                <button class="nav-link text-dark btn btn-default" title="Manage">
+                    <span style="font-size: 1em;">
+                        <i class="fas fa-power-off"></i>
+                    </span>Log Off
+                </button>
             </form>
         </li>
     }
