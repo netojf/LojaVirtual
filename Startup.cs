@@ -6,6 +6,7 @@ using LojaVirtual.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,7 @@ namespace LojaVirtual
 			services.AddSession();
 			services.AddRazorPages();
 
+			
 			services.AddDbContext<LojaVirtualContext>(
 				options => options
 				.UseSqlServer(
@@ -42,13 +44,11 @@ namespace LojaVirtual
 			
 			services.AddAntiforgery();
 			
-
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			app.UseSession();
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -60,14 +60,15 @@ namespace LojaVirtual
 				app.UseHsts();
 			}
 
+			app.UseSession();
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-
 			app.UseRouting();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{
+
 				endpoints.MapRazorPages();
 			});
 		}

@@ -50,9 +50,8 @@ namespace LojaVirtual
                 if (ModelState.IsValid)
                 {
                     // Initialization.  
-                    var loginInfo = LoginManagement.Login(tempUser.Name,tempUser.Password);
-
-                    if (LoginManagement.Login(tempUser.Name, tempUser.Password))
+                    Task<bool> loginInfo = LoginManagement.LoginAsync(tempUser.Name,tempUser.Password);
+                    if (loginInfo.Result)
                     {
                         HttpContext.Session.SetString("username", tempUser.Name);
                         return RedirectToPage("../Index");
@@ -60,14 +59,12 @@ namespace LojaVirtual
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Invalid username or password.");
-                        return Page();
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Info  
-                Console.Write(ex);
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
 
             // Info.  

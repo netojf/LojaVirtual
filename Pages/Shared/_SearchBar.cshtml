@@ -1,0 +1,13 @@
+﻿@page "{handler?}"
+@model LojaVirtual._SearchBarModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<div class="container-fluid h-10 my-4">
+    <form class="searchbar form-inline d-flex justify-content-xl-center align-content-center h-100 w-100" action="/" method="post">
+        <input class="search_input w-75 p-1" type="text" name="" placeholder="Search...">
+        <a asp-page-handler="OnGet" class="search_icon text-dark m-1"><span class="fas fa-search"></span></a>
+    </form>
+</div>

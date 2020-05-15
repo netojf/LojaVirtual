@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Product\Pages\" />
     <Folder Include="Pages\User\Shared\" />
   </ItemGroup>
 

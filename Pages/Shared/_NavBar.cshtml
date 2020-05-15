@@ -1,0 +1,56 @@
+﻿@page
+@model LojaVirtual._NavBarModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<!-- #region NavBar -->
+
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-page="/Index">LojaVirtual</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+            <partial name="_LoginPartial" model="new _LoginPartialModel()" />
+
+            <ul class="navbar-nav flex-grow-1">
+
+                <!-- #region Home -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                </li>
+                <!-- #endregion -->
+                <!-- #region Categories -->
+                <li class="nav-item">
+                    <div class="dropdown border-0">
+                        <button class="btn dropdown-toggle nav-link text-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categorias
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            @{
+                                using (Models.LojaVirtualContext lojaVirtualContext = new Models.LojaVirtualContext())
+                                {
+                                    foreach (var item in lojaVirtualContext.Categories)
+                                    {
+                                        <a asp-page="/Product/ProductView" asp-page-handler="Get" asp-route-id="@item.CategoryId" class="dropdown-item">@item.Name</a>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </li>
+                <!-- #endregion -->
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- #endregion -->

@@ -5,142 +5,21 @@
 }
 
 @{
-    if (Model.ShoppingCart == null || Model.ShoppingCart.Products == null)
+    if (Model.ShoppingCart == null || Model.ShoppingCart.ProductOrders == null)
     {
+        
         @await Html.PartialAsync("Shared/_EmptyShoppingCart", new _EmptyShoppingCartModel(), null);
     }
     else
     {
-        if (Model.ShoppingCart.Products.Count == 0)
+        if (Model.ShoppingCart.ProductOrders.Count == 0)
         {
             @await Html.PartialAsync("Shared/_EmptyShoppingCart", new _EmptyShoppingCartModel(), null);
 
         }
 
-        <!-- #region ShoppingTable -->
-
-        <div class="container-fluid">
-            <table class="table">
-
-                <!-- #region Colunas -->
-
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Produto</th>
-                        <th scope="col">Quantidade</th>
-                        <th scope="col">Valor Unitário</th>
-                        <th scope="col">Valor Total</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-
-                <!-- #endregion -->
-                <!-- #region Table Body -->
-                <tbody>
-                    <!-- #region Product in List -->
-                    <tr>
-                        <td class="col-sm-8 col-md-6">
-                            <div class="media">
-                                @* todo: product Image *@
-                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-
-                                <div class="media-body mx-3">
-                                    @* todo: product Name *@
-                                    <h4 class="media-heading"><a href="#">Nome</a></h4>
-                                    @*todo: Product BRand *@
-                                    <h5 class="media-heading"> by <a href="#">Marca</a></h5>
-                                    @* todo: availability *@
-                                    <span>Status: </span><span class="text-success"><strong>Disponível</strong></span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-sm-1 col-md-1" style="text-align: center">
-                            @* todo: Quantity *@
-                            <input type="number" class="form-control" min="1" value="1">
-                        </td>
-                        @* todo: unity price *@
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                        @* todo: total product value *@
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                        <td class="col-sm-1 col-md-1">
-                            <button type="button" class="btn btn-danger">
-                                <span class="fa fa-remove"></span> Remove
-                            </button>
-                        </td>
-                    </tr>
-
-                    <!-- #endregion -->
-                    <!-- #region Product in List -->
-                    <tr>
-                        <td class="col-sm-8 col-md-6">
-                            <div class="media">
-                                @* todo: product Image *@
-                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-
-                                <div class="media-body mx-3">
-                                    @* todo: product Name *@
-                                    <h4 class="media-heading"><a href="#">Nome</a></h4>
-                                    @*todo: Product BRand *@
-                                    <h5 class="media-heading"> by <a href="#">Marca</a></h5>
-                                    @* todo: availability *@
-                                    <span>Status: </span><span class="text-success"><strong>Disponível</strong></span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-sm-1 col-md-1" style="text-align: center">
-                            @* todo: Quantity *@
-                            <input type="number" class="form-control" min="1" value="1">
-                        </td>
-                        @* todo: unity price *@
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                        @* todo: total product value *@
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                        <td class="col-sm-1 col-md-1">
-                            <button type="button" class="btn btn-danger">
-                                <span class="fa fa-remove"></span> Remove
-                            </button>
-                        </td>
-                    </tr>
-
-                    <!-- #endregion -->
-                </tbody>
-                <!-- #endregion -->
-            </table>
-
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Subtotal</th>
-                        <th>Valor da entrega</th>
-                        <th><strong>Total</strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>13123</td>
-                        <td>112314</td>
-                    </tr>
-                    <tr>
-                        <td>   </td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-block">
-                                <span class="fa fa-shopping-cart"></span>
-                                Continuar Comprando
-                            </button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-success btn-block mx-auto my-auto">
-                                <span class="fa fa-play"></span>
-                                Checkout
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- #endregion -->
+        @await Html.PartialAsync("Shared/_ShoppingCartContent", new _ShoppingCartContentModel(Model.ShoppingCart.ProductOrders), null);
+        
     }
 }
 

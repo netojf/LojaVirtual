@@ -9,7 +9,7 @@ namespace LojaVirtual.Models
 	{
 		public int ShoppingCartId { get; set; }
 		public int UserFk { get; set; }
-		public ICollection<Product> Products { get; set; }
+		public ICollection<ProductOrder> ProductOrders { get; set; }
 		public User User { get; set; }
 	}
 }

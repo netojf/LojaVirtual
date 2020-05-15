@@ -1,0 +1,141 @@
+﻿
+@model LojaVirtual._ShoppingCartContentModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<!-- #region ShoppingTable -->
+<span></span>
+<div class="container-fluid">
+    <table class="table">
+
+        <!-- #region Colunas -->
+
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Produto</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Valor Unitário</th>
+                <th scope="col">Valor Total</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+
+        <!-- #endregion -->
+        <!-- #region Table Body -->
+        <tbody>
+            <!-- #region Product List -->
+            <!-- #region Product Item -->
+            @{int i = 0; }
+
+            @foreach (var order in @Model.GetProductOrders())
+            {
+                
+                foreach (var product in order.Products)
+                {
+                    if (product == null)
+                    {
+                        <tr>
+                            <td class="col-sm-8 col-md-6d-flex justify-content-center">
+
+                                <div class="media">
+                                    @* todo: Localização *@
+                                    <h1 class="m-auto"> Não foi possível Adicionar o item</h1>
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+                    else
+                    {
+
+                        <!-- #region Product -->
+                        //todo: a partial of this
+                        <tr>
+                            <td class="col-sm-8 col-md-6">
+                                <div class="media">
+                                    @* todo: product Image *@
+                                    <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+
+                                    <div class="media-body mx-3">
+                                        @* todo: product Name *@
+                                        <h4 class="media-heading"><a href="#">@product.Name</a></h4>
+                                        @*todo: Product BRand *@
+                                        <h5 class="media-heading"><a href="#">Marca</a></h5>
+                                        @* todo: availability *@
+                                        <span>Status: </span><span class="text-success"><strong>Disponível</strong></span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="col-sm-1 col-md-1" style="text-align: center">
+                                <div class="row">
+                                    <form class="col-4" asp-page-handler="SubtractOrder" asp-route-id=@product.ProductId method="post">
+                                        <button class="btn-danger p-1" type="submit" name="button">-</button>
+                                    </form>
+                                    <label class="col-4">@Model.GetQuantity(order)</label>
+                                    <form class="col-4" asp-page-handler="AddOrder" asp-route-id=@product.ProductId method="post">
+                                        <button class="btn-success p-1" type="submit" name="button">+</button>
+                                    </form>
+                                </div>
+                            </td>
+                            @* todo: Localization of price *@
+                            <td class="col-sm-1 col-md-1 text-center"><strong>R$ @product.Price</strong></td>
+                            @* todo: total product value *@
+                            <td class="col-sm-1 col-md-1 text-center"><strong>R$ @Model.GetOrderPrice(order, product)</strong></td>
+                            <td class="col-sm-1 col-md-1">
+                                <form class="col-4" asp-page-handler="DeleteOrder" asp-route-id=@i method="post">
+                                    <button class="btn-danger" type="submit" name="button">
+                                        <span class="fas fa-remove"></span> Remover
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <!-- #endregion -->}
+                }
+                i++;
+            }
+
+            <!-- #endregion -->
+            <!-- #endregion -->
+        </tbody>
+        <!-- #endregion -->
+    </table>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Subtotal</th>
+                <th>Valor da entrega</th>
+                <th><strong>Total</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.GetSubtotal()</th>
+                <td>@Model.GetDeliveryPrice()</td>
+                <td>@Model.GetTotalPrice()</td>
+            </tr>
+            <tr>
+                <td>   </td>
+                <td>
+                    @* todo: Back Button *@
+                    <a   href="javascript:history.back()" class="btn btn-primary btn-block">
+                        <span class="fa fa-shopping-cart"></span>
+                        Continuar Comprando
+                    </a>
+                </td>
+                <td>
+                    @* todo: Redirect to Success *@
+                    <a asp-page="/Payment/PaymentSucess" class="btn btn-success btn-block mx-auto my-auto">
+                        <span class="fa fa-play"></span>
+                        Prosseguir
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- #endregion -->

@@ -27,62 +27,6 @@ namespace LojaVirtual
 
         }
 
-        public async Task<IActionResult> AddShoppingCartItem()
-        {
-            if (!LoginManagement.IsLogged)
-            {
-                return RedirectToPage("/User/Login"); 
-            }
-
-
-            if (LoginManagement.TempUser.ShoppingCart == null)
-            {
-                LoginManagement.TempUser.ShoppingCart = new ShoppingCart();
-            }
-
-
-            if (LoginManagement.TempUser.ShoppingCart.Products == null)
-            {
-                LoginManagement.TempUser.ShoppingCart.Products = new List<Product>(); 
-            }
-
-            LoginManagement.TempUser.ShoppingCart.Products.Add(Product);
-
-            using (LojaVirtualContext ctxt = new LojaVirtualContext())
-            {
-                ctxt.Users.Update(LoginManagement.TempUser);
-                await ctxt.SaveChangesAsync(); 
-            }
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAddShoppingCartItem()
-        {
-            if (!LoginManagement.IsLogged)
-            {
-                return RedirectToPage("/User/Login");
-            }
-
-
-            if (LoginManagement.TempUser.ShoppingCart == null)
-            {
-                LoginManagement.TempUser.ShoppingCart = new ShoppingCart();
-            }
-
-
-            if (LoginManagement.TempUser.ShoppingCart.Products == null)
-            {
-                LoginManagement.TempUser.ShoppingCart.Products = new List<Product>();
-            }
-
-            LoginManagement.TempUser.ShoppingCart.Products.Add(Product);
-
-            using (LojaVirtualContext ctxt = new LojaVirtualContext())
-            {
-                ctxt.Users.Update(LoginManagement.TempUser);
-                await ctxt.SaveChangesAsync();
-            }
-            return Page();
-        }
+        
     }
 }

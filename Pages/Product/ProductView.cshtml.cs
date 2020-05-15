@@ -48,32 +48,10 @@ namespace LojaVirtual
                 return NotFound();
             }
 
-            ModelState.Clear();
             return Page();
         }
 
-        public async Task<IActionResult> OnGetPopulate(int id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Category = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryId == id);
-            Products = await _context.Products
-                                    .Where(p => p.Category.CategoryId == id)
-                                    .ToListAsync();
-
-            if (Products == null)
-            {
-                return NotFound();
-            }
-
-            return Page();
-        }
-
-
-        public async Task<IActionResult> OnPostAddShoppingCartItem(Product product)
+        public async Task<IActionResult> OnPostAddItem(int product, int category)
         {
             if (!LoginManagement.IsLogged)
             {
@@ -87,19 +65,50 @@ namespace LojaVirtual
             }
 
 
-            if (LoginManagement.TempUser.ShoppingCart.Products == null)
+            if (LoginManagement.TempUser.ShoppingCart.ProductOrders == null)
             {
-                LoginManagement.TempUser.ShoppingCart.Products = new List<Product>();
+                LoginManagement.TempUser.ShoppingCart.ProductOrders = new List<ProductOrder>();
             }
 
-            LoginManagement.TempUser.ShoppingCart.Products.Add(product);
+            Product prod;
 
             using (LojaVirtualContext ctxt = new LojaVirtualContext())
             {
-                ctxt.Users.Update(LoginManagement.TempUser);
+                prod = await ctxt.Products
+                    .Where(x => x.ProductId == product)
+                    .SingleOrDefaultAsync();
+
+                var orders = LoginManagement.TempUser.ShoppingCart.ProductOrders;
+
+                ProductOrder order = orders
+                        .SingleOrDefault(o => o.Products
+                        .Any(p => p.ProductId == prod.ProductId));
+
+                if (order == null)
+                {
+                    order = new ProductOrder();
+                    order.Products = new List<Product>();
+                    order.Products.Add(prod);
+                    orders.Add(order);
+                }
+                else
+                {
+                    if (order.Quantity == 0)
+                    {
+                        order.Quantity = 1; 
+                    }
+                    order.Quantity += 1; 
+
+                }
+
+
+                LoginManagement.TempUser.ShoppingCart.ProductOrders = orders; 
+
+                ctxt.Entry(LoginManagement.TempUser);
                 await ctxt.SaveChangesAsync();
             }
-            return Page();
+            //todo: redirecto to a temporary Message then to lastPage
+            return RedirectToPage(new {id = category } ); 
         }
         #endregion
     }

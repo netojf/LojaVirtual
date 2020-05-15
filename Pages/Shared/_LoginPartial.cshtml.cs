@@ -26,12 +26,6 @@ namespace LojaVirtual
 
         }
 
-        public IActionResult Logoff()
-        {
-            LoginManagement.Logoff();
-            return RedirectToPage("../Index"); 
-        }
-
         public IActionResult OnPostLogoff()
         {
             HttpContext.Session.Remove(LoginManagement.TempUser.Name); 

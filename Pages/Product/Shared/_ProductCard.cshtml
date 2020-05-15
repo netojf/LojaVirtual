@@ -4,7 +4,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-<div class="col-lg-4 col-md-6  py-3 px-0" >
+<div class="col-lg-4 col-md-6 py-4 px-0" >
     <div class="container">
         <div class="card-deck flex-row ">
             <div class="card h-100">
@@ -30,16 +30,15 @@
                 <!-- #region Controls -->
 
                 <div class="d-flex justify-content-center">
-                    @*<a asp-page-handler="AddShoppingCartItem" asp-route-product="@Model.Product" class="btn btn-info mb-1 btn-block">Adicionar ao Carrinho</a>*@
 
                     <form class="form-inline" method="post">
 
-                        <div class="form-group col-auto">
-                            <button  asp-page-handler="AddShoppingCartItem" asp-route-product="@Model.Product" type="submit" class="btn btn-info mb-1 btn-block">Adicionar ao Carrinho</button>
+                        <div class="form-group d-flex">
+                            <button  asp-page-handler="AddItem" asp-route-product=@Model.Product.ProductId  asp-route-category=@Model.Product.Category.CategoryId type="submit" class="btn btn-info mb-1 btn-block">Adicionar ao Carrinho</button>
                         </div>
 
-                        <div class="form-group col-auto">
-                            <button type="submit" asp-page-handler="AddShoppingCartItem" asp-route-product="@Model.Product" class="btn btn-danger mb-1 btn-block">Adicionar aos Favoritos</button>
+                        <div class="form-group d-flex">
+                            <button type="submit" asp-page-handler="AddItemToFav" asp-route-product=@Model.Product.ProductId class="btn btn-danger mb-1 btn-block">Adicionar aos Favoritos</button>
                         </div>
 
                     </form>
