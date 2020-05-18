@@ -1,0 +1,56 @@
+﻿
+<div class="container">
+    <InputFile  OnChange="HandleFileSelected" accept="image/x-png,image/gif,image/jpeg" />
+
+    @* ImageView *@
+    <ul class="row">
+        @for (int i = 0; i < imageCount; i++)
+        {
+            <li class="list-group-item m-1 col-sm-1 col-md-3">
+                <div class="d-flex align-content-center justify-content-start">
+                    <p class="d-flex justify-content-center text-danger">@Images[i].ImageName</p>
+                    <div class="container m-2">
+                        <img class="my-3" style='height: 100%; width: 100%; object-fit: contain' src=@imageData[i] />
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public List<Models.Image> Images { get; set; }
+
+    int imageCount = 0;
+
+    IFileListEntry file;
+    List<string> imageData = new List<string>();
+
+    Models.Image Image = new Models.Image();
+
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        if (Images == null)
+        {
+            Images = new List<Models.Image>();
+        }
+        file = files.FirstOrDefault();
+
+        using (MemoryStream ms = new MemoryStream((int)file.Size + 1))
+        {
+            await file.Data.CopyToAsync(ms);
+            Image.Data = ms.ToArray();
+        }
+        Image.ImageName = file.Name;
+        string byte64 = Convert.ToBase64String(Image.Data);
+        imageData.Add(new string("data:image/gif;base64," + byte64));
+
+        Images.Add(Image);
+        Image = new Models.Image();
+        imageCount++;
+    }
+}
+

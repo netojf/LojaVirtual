@@ -9,7 +9,6 @@ namespace LojaVirtual
 {
     public class _Carousel3IModel : PageModel
     {
-        readonly LojaVirtual.Models.LojaVirtualContext _context;
         public _Carousel3IModel()
         {
             

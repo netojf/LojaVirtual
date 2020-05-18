@@ -76,6 +76,9 @@ namespace LojaVirtual.Migrations
                     b.Property<byte[]>("Data")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
@@ -223,7 +226,7 @@ namespace LojaVirtual.Migrations
 
             modelBuilder.Entity("LojaVirtual.Models.Image", b =>
                 {
-                    b.HasOne("LojaVirtual.Models.Product", null)
+                    b.HasOne("LojaVirtual.Models.Product", "Product")
                         .WithMany("Images")
                         .HasForeignKey("ProductId");
                 });

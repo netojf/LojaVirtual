@@ -11,7 +11,6 @@ namespace LojaVirtual.Models
 	public class LojaVirtualContext : DbContext
 	{
 		#region Properties
-
 		public DbSet<Product> Products { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<User> Users { get; set; }
@@ -19,9 +18,8 @@ namespace LojaVirtual.Models
 		public DbSet<ProductOrder> productOrders { get; set; }
 		public DbSet<Adress> Adresses { get; set; }
 		public DbSet<Image> Images { get; set; }
-
-
 		#endregion
+
 
 		#region Constructor
 		public LojaVirtualContext([NotNullAttribute] DbContextOptions options) : base(options)
@@ -84,6 +82,11 @@ namespace LojaVirtual.Models
 				.Entity<Product>()
 				.HasMany(o => o.Products)
 				.WithOne(p => p.ProductPack);
+
+			modelBuilder
+				.Entity<Product>()
+				.HasMany(p => p.Images)
+				.WithOne(i => i.Product);
 
 			modelBuilder
 				.Entity<Product>()

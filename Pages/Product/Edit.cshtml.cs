@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LojaVirtual.Models;
 
-namespace LojaVirtual
+namespace LojaVirtual.Pages.Product
 {
     public class EditModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace LojaVirtual
         }
 
         [BindProperty]
-        public Product Product { get; set; }
+        public Models.Product Product { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

@@ -13,5 +13,10 @@ namespace LojaVirtual
         {
 
         }
+
+        public void OnPost()
+        {
+
+        }
     }
 }

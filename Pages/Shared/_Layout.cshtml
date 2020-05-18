@@ -9,24 +9,21 @@
     <link rel="stylesheet" href="~/fontawesome/css/all.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
-
+    <base href="~/" />
 </head>
 <body>
     <header>
 
-        @await Html.PartialAsync("_NavBar", new _NavBarModel(new HttpContext()), ViewData)
+        @await Html.PartialAsync("_NavBar", new _NavBarModel(), ViewData)
 
     </header>
 
     <!-- #region Carousel -->
     @await Html.PartialAsync("_Carousel3I", new _Carousel3IModel(), ViewData)
     <!-- #endregion -->
-
     <!-- #region SearchBar -->
     @await Html.PartialAsync("_SearchBar", new _SearchBarModel(), ViewData)
     <!-- #endregion -->
-
     <!-- #region SidePanel - Commented -->
     @*
         <div class="row">
@@ -50,7 +47,6 @@
     *@
 
     <!-- #endregion -->
-
     <!-- #region Body -->
     <div class="container">
         <main role="main" class="pb-3">
@@ -66,8 +62,9 @@
     <script defer src="~/fontawesome/js/brands.js"></script>
     <script defer src="~/fontawesome/js/solid.js"></script>
     <script defer src="~/fontawesome/js/fontawesome.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/BlazorInputFile/inputfile.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -32,7 +32,7 @@ namespace LojaVirtual
 		{
 			services.AddSession();
 			services.AddRazorPages();
-
+			services.AddServerSideBlazor();
 			
 			services.AddDbContext<LojaVirtualContext>(
 				options => options
@@ -68,8 +68,9 @@ namespace LojaVirtual
 
 			app.UseEndpoints(endpoints =>
 			{
-
 				endpoints.MapRazorPages();
+				endpoints.MapBlazorHub();
+				endpoints.MapFallbackToPage("/_Host");
 			});
 		}
 	}

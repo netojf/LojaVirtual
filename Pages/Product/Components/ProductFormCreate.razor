@@ -1,0 +1,91 @@
+﻿@page "/ProductForm"
+
+    <EditForm Model="@this.Product" enctype="multipart/form-data" OnValidSubmit="@SubmitForm">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        @* Name *@
+        <div class="form-group">
+            <label for=@Product.Name></label>
+            <InputText @bind-Value="@Product.Name" />
+        </div>
+        @* Description *@
+        <div class="form-group">
+            <label for=@Product.Description></label>
+            <InputText @bind-Value="@Product.Description" />
+        </div>
+        @* Brand *@
+        <div class="form-group">
+            <label for=@Product.Brand></label>
+            <InputText @bind-Value="@Product.Name" />
+        </div>
+        @* Category *@
+        <div class="form-group">
+            <label for=@Product.Category></label>
+            @if (Product.Category == null)
+            {
+                Product.Category = new Models.Category();
+            }
+            <InputSelect @bind-Value="@Product.Category">
+                <option value="">Selecione uma Categoria</option>
+                @{
+                    foreach (var category in _ctxt.Categories)
+                    {
+                        <option value="@category">@category.Name</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+        @* Images *@
+        <div class="form-group">
+            @{
+                if (Product.Images == null)
+                {
+                    Product.Images = new List<Models.Image>();
+                }
+            }
+            <ImageUploadInput Images="@Product.Images.ToList()" />
+        </div>
+        @* Product Image *@
+        <div class="form-group">
+            @if (Product.Images != null && Product.Images.Count > 0)
+            {
+                Product.ProductImage = 0;
+            }
+            <InputSelect @bind-Value="@Product.ProductImage">
+                <option value="">Selecione uma Imagem Principal</option>
+                @{
+                    foreach (var image in Product.Images)
+                    {
+                        <option value="@image.ImageId">@image.ImageName</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-danger btn-block"/> 
+        </div>
+
+    </EditForm>
+
+@code
+{
+    public Models.Product Product { get; set; }
+    readonly  Models.LojaVirtualContext _ctxt; 
+
+    public ProductFormCreate(Models.LojaVirtualContext ctxt)
+    {
+        _ctxt = ctxt; 
+    }
+
+    async Task SubmitForm()
+    {
+
+    }
+}
+@code{
+
+
+
+
+}

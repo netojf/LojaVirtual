@@ -50,8 +50,8 @@ namespace LojaVirtual
                 if (ModelState.IsValid)
                 {
                     // Initialization.  
-                    Task<bool> loginInfo = LoginManagement.LoginAsync(tempUser.Name,tempUser.Password);
-                    if (loginInfo.Result)
+                    bool loginInfo = await LoginManagement.LoginAsync(tempUser.Name,tempUser.Password);
+                    if (loginInfo)
                     {
                         HttpContext.Session.SetString("username", tempUser.Name);
                         return RedirectToPage("../Index");

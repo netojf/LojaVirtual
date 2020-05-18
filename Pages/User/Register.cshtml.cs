@@ -27,11 +27,20 @@ namespace LojaVirtual
         }
         #endregion
 
-        public void OnGet()
+        #region Methods
+
+        public IActionResult OnGet()
         {
-            
+            if (LoginManagement.IsLogged)
+            {
+                if (LoginManagement.TempUser.IsAdmin!)
+                {
+                    return RedirectToPage("/Index");
+                }
+            }
+            return Page();
         }
-        
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -44,17 +53,21 @@ namespace LojaVirtual
             try
             {
                 await _context.SaveChangesAsync();
-                await LoginManagement.LoginAsync(ModelUser.Name, ModelUser.Password);
+                if (!LoginManagement.TempUser.IsAdmin)
+                {
+                    await LoginManagement.LoginAsync(ModelUser.Name, ModelUser.Password);
+                }
 
             }
             catch (Exception)
             {
                 ModelState.TryAddModelError("", "Something gone wrong");
-                return Page(); 
+                return Page();
             }
 
             //todo: Redirect to previous Page
             return RedirectToPage("/index");
-        }
+        } 
+        #endregion
     }
 }

@@ -1,0 +1,13 @@
+﻿@page "/counter"
+@code
+{
+    int i = 2;
+    void Increase()
+    {
+        i++;
+    }
+}
+
+<h1> @i</h1>
+<button class="btn btn-danger" @onclick="Increase">Click</button>
+

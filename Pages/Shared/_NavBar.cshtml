@@ -7,7 +7,7 @@
 <!-- #region NavBar -->
 
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-0">
     <div class="container">
         <a class="navbar-brand" asp-area="" asp-page="/Index">LojaVirtual</a>
 
@@ -19,6 +19,7 @@
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
             <partial name="_LoginPartial" model="new _LoginPartialModel()" />
 
+            
             <ul class="navbar-nav flex-grow-1">
 
                 <!-- #region Home -->
@@ -46,7 +47,20 @@
                     </div>
                 </li>
                 <!-- #endregion -->
-
+                @if (LoginManagement.IsLogged)
+                {
+                    if (LoginManagement.TempUser.IsAdmin)
+                    {
+                       <li class="nav-item m-1 row">
+                            <a asp-page="/Management/ManagementIndex" asp-page-handler="" class="nav-link text-dark">
+                                <span style="font-size: 1em;">
+                                    <i class="fas fa-gears"></i>
+                                </span>
+                                Administrativo
+                            </a>
+                        </li>
+                    }
+                }
             </ul>
         </div>
     </div>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using LojaVirtual.Models;
 
-namespace LojaVirtual
+namespace LojaVirtual.Pages.Product
 {
     public class IndexModel : PageModel
     {
@@ -18,7 +18,7 @@ namespace LojaVirtual
             _context = context;
         }
 
-        public IList<Product> Product { get;set; }
+        public IList<Models.Product> Product { get;set; }
 
         public async Task OnGetAsync()
         {
