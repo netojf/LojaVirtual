@@ -2,10 +2,16 @@
 
 <p>Year: @Year</p>
 
+<button class="btn btn-danger" @onclick="change">Click</button>
 @code {
     [Parameter]
     public int Year { get; set; }
 
     [Parameter]
     public EventCallback<int> YearChanged { get; set; }
+
+    void change()
+    {
+        Year = 1; 
+    }
 }

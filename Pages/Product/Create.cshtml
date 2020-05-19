@@ -7,93 +7,9 @@
     Layout = "_ManagementLayout";
 }
 
-<h1>Cadastrar</h1>
-
-<h4>Produto</h4>
-<hr />
-<div class="row">
-
-    <div class="col-md-4">
-        <form class="md-form" asp-page-handler="OnPost" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="Product.Name" class="control-label"></label>
-                <input asp-for="Product.Name" class="form-control" />
-                <span asp-validation-for="Product.Name" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Product.Description" class="control-label"></label>
-                <input asp-for="Product.Description" class="form-control" />
-                <span asp-validation-for="Product.Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Product.Price" class="control-label"></label>
-                <input asp-for="Product.Price" class="form-control" />
-                <span asp-validation-for="Product.Price" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Product.Brand" class="control-label"></label>
-                <input asp-for="Product.Brand" class="form-control" />
-                <span asp-validation-for="Product.Brand" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                @using (LojaVirtual.Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
-                {
-                    List<Models.Category> categories = new List<Models.Category>();
-                    List<string> itemlist = new List<string>();
-
-                    foreach (var item in ctxt.Categories)
-                    {
-                        categories.Add(item);
-                    }
-
-                    foreach (var category in categories)
-                    {
-                        itemlist.Add(category.Name);
-                    }
-
-                    if (Model.Product.Category == null)
-                    {
-                        Model.Product.Category = new Models.Category();
-                    }
-
-                    @Html.DropDownListFor(model => model.Product.Category,
-                   new SelectList(itemlist.ToArray(), Model.Product.Category),
-                   "Categorias",
-                   new { @class = "btn btn-dark dropdown-toggle nav-link" })
-                }
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Product.Brand" class="control-label"></label>
-                <input asp-for="Product.Brand" class="form-control" />
-                <span asp-validation-for="Product.Brand" class="text-danger"></span>
-            </div>
-
-
-            <div id="UploadArea">
-                <div class="form-group">
-                    <label asp-for="Product.Images" class="control-label"></label>
-                    <div class="custom-file">
-                        <input asp-page-handler="" asp-page="/Product/Create" asp-for="Upload" type="file" class="custom-file-input" id="customFile">
-                        <label class="custom-file-label" for="customFile"></label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" />
-            </div>
-
-        </form>
-    </div>
+<div class="container mb-2">
+    <component type="typeof(Product.Components.ProductFormCreate)" render-mode="ServerPrerendered" />
 </div>
-
 
 <div>
     @* Localizar *@
@@ -103,79 +19,8 @@
 
 
 @section Scripts {
-    <script>
-        // Add the following code if you want the name of the file appear on select
-        $(".custom-file-input").on("change", function () {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-    </script>
-    <script>
-        var limit = 5; // Max questions
-        var count = 1; // There are 4 questions already
-
-        function addQuestion() {
-            // Get the quiz form element
-            var UpLoadArea = document.getElementById('UploadArea');
-
-            // Good to do error checking, make sure we managed to get something
-            if (UpLoadArea) {
-
-                //<div class="form-group">
-                //    <label asp-for="Product.Images" class="control-label"></label>
-                //    <div class="custom-file">
-                //        <input asp-page-handler="" asp-page="/Product/Create" asp-for="Upload" type="file" class="custom-file-input" id="customFile">
-                //        <label class="custom-file-label" for="customFile"></label>
-                //    </div>
-                //</div>
-
-                if (count < limit) {
-                    // Create a new <p> element
-                    var newP = document.createElement('div');
-                    newP.classList.add('form-group');
-
-                    //Label
-                    var label1 = document.createElement('label');
-                    label1.setAttribute("asp-for", "Product.Images");
-                    label1.classList.add("control-label");
-
-                    //custom-file div
-                    var cFileDiv = document.createElement('div');
-                    cFileDiv.classList.add("custom-file");
-
-                    //UploadInput
-                    var uploadInput = document.createElement('input');
-                    uploadInput.setAttribute("asp-for", "Upload");
-                    uploadInput.type = "file";
-                    uploadInput.classList.add("custom-file-input");
-
-                    //custom file label
-                    var customFileLabel = 
-
-                    //falta colocar o que vem dentro
-                    newP.innerHTML = 'Question ' + (count + 1);
-
-                    // Create the new text box
-                    var newInput = document.createElement('input');
-                    newInput.type = 'text';
-                    newInput.name = 'questions[]';
-
-                    // Good practice to do error checking
-                    if (newInput && newP) {
-                        // Add the new elements to the form
-                        UpLoadArea.appendChild(newP);
-                        UpLoadArea.appendChild(newInput);
-                        // Increment the count
-                        count++;
-                    }
-
-                }
-                else {
-                    alert('Limite Alcançado');
-                }
-            }
-        }
-    </script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/BlazorInputFile/inputfile.js"></script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

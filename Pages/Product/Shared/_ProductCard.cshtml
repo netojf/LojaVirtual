@@ -9,12 +9,29 @@
         <div class="card-deck flex-row m-2">
             <div class="card h-100">
 
-                <a asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId"    class="flex-row" style="color:#000000; text-decoration:none" >
+                <a asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId" class="flex-row" style="color:#000000; text-decoration:none">
 
                     <!-- #region Image -->
-                    <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
-                    <!-- #endregion -->
+                    @if (@Model.Product.ProductImage != null && Model.Product.Images != null)
+                    {
+                        if (Model.Product.Images.Count > 0)
+                        {
+                            int imageIndex = (int)Model.Product.ProductImage;
+                            Models.Image img = Model.Product.Images.ElementAt(imageIndex);
+                            string byte64 = new string("data:image/gif;base64," + Convert.ToBase64String(img.Data)) ;
+                            <img width="700" height="200" class="card-img-top" src="@byte64" alt="">
+                        }
+                        else
+                        {
+                            <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
+                        }
 
+                    }
+                    else
+                    {
+                        <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
+                    }
+                    <!-- #endregion -->
                     <!-- #region Properties -->
 
                     <div class="card-body ">

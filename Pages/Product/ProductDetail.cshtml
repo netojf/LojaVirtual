@@ -8,7 +8,17 @@
     <div class="container-fluid ">
 
         <div class="row">
-            <img  class="mx-auto my-2 img" src="http://placehold.it/900x400" alt="">
+            @if (@Model.Product.ProductImage != null && Model.Product.Images != null)
+            {
+                int imageIndex = (int)Model.Product.ProductImage;
+                Models.Image img = Model.Product.Images.ElementAt(imageIndex);
+                string byte64 = new string("data:image/gif;base64," + Convert.ToBase64String(img.Data)) ;
+                <img class="mx-auto my-2 img" width="700" height="200"  src="@byte64" alt="">
+            }
+            else
+            {
+                <img class="mx-auto my-2 img" width="700" height="200" src="http://placehold.it/900x400" alt="">
+            }
 
             <div class="row  card-body">
                 <div class="card col-sm-9 ">
@@ -23,15 +33,18 @@
                     <form class="card-body m-0" action="/" method="post">
 
                         <div class="card-body">
-                            <div class="row"><label>Quantidade</label></div class="row">
+                            <div class="row"><label>Quantidade</label></div>
                             <div class="row">
                                 <input type="number" class="form-control col" min="1">
-                            </div class="row">                        </div>
+                            </div>
+                        </div>
 
                         <div class="card-body">
                             <div class="row"><button type="submit" class="btn btn-danger p-2 m-1 col"><span class=""></span>Adicionar a Lista de Desejos</button></div>
                             <div class="row"><button type="submit" class="btn btn-primary p-2 m-1 col">Adicionar ao Carrinho</button></div>
-                            <div class="row"><button type="submit" class="btn btn-success p-4 m-1 col">Comprar</button></div>
+                            <div class="row">
+                            <button type="submit" asp-page="/Shopping-Cart/ShoppingCart" asp-page-handler="/Shopping-Cart/ShoppingCart" class="btn btn-success p-4 m-1 col">Comprar</button>
+                            </div>
                         </div>
 
                     </form>

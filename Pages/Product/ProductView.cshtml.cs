@@ -38,7 +38,9 @@ namespace LojaVirtual
                 return NotFound();
             }
 
-            Category = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryId == id);
+            Category = await _context
+                .Categories
+                .FirstOrDefaultAsync(c => c.CategoryId == id);
             Products = await _context.Products
                                     .Where(p => p.Category.CategoryId == id)
                                     .ToListAsync();

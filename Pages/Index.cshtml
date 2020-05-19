@@ -3,49 +3,11 @@
 @{
     ViewData["Title"] = "Home page";
 }
-    <div class="row m-3">
-        <component type="typeof(Product.Components.ProductFormCreate)" render-mode="ServerPrerendered" />
-    </div>
+    <h1>Bem Vindo(a)</h1>
 
 
 <script>
 var limit = 10; // Max questions
 var count = 4; // There are 4 questions already
 
-function addQuestion()
-{
-    // Get the quiz form element
-    var quiz = document.getElementById('quiz');
-
-    // Good to do error checking, make sure we managed to get something
-    if (quiz)
-    {
-        if (count < limit)
-        {
-            // Create a new <p> element
-            var newP = document.createElement('p');
-            newP.innerHTML = 'Question ' + (count + 1);
-
-            // Create the new text box
-            var newInput = document.createElement('input');
-            newInput.type = 'text';
-            newInput.name = 'questions[]';
-
-            // Good practice to do error checking
-            if (newInput && newP)
-            {
-                // Add the new elements to the form
-                quiz.appendChild(newP);
-                quiz.appendChild(newInput);
-                // Increment the count
-                count++;
-            }
-
-        }
-        else
-        {
-            alert('Question limit reached');
-        }
-    }
-}
 </script>

@@ -4,7 +4,19 @@
   "libraries": [
     {
       "library": "font-awesome@5.13.0",
-      "destination": "wwwroot/lib/font-awesome/"
+      "destination": "wwwroot/font-awesome/"
+    },
+    {
+      "library": "twitter-bootstrap@4.5.0",
+      "destination": "wwwroot/twitter-bootstrap/"
+    },
+    {
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/jquery/"
+    },
+    {
+      "library": "popper.js@2.4.0",
+      "destination": "wwwroot/popper.js/"
     }
   ]
 }

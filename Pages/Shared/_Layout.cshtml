@@ -5,9 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LojaVirtual</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/fontawesome/css/all.css" />
-    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/twitter-bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <base href="~/" />
 </head>
@@ -19,7 +18,7 @@
     </header>
 
     <!-- #region Carousel -->
-    @await Html.PartialAsync("_Carousel3I", new _Carousel3IModel(), ViewData)
+    @*@await Html.PartialAsync("_Carousel3I", new _Carousel3IModel(), ViewData)*@
     <!-- #endregion -->
     <!-- #region SearchBar -->
     @await Html.PartialAsync("_SearchBar", new _SearchBarModel(), ViewData)
@@ -57,11 +56,11 @@
     <!-- #endregion -->
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script defer src="~/fontawesome/js/brands.js"></script>
-    <script defer src="~/fontawesome/js/solid.js"></script>
-    <script defer src="~/fontawesome/js/fontawesome.js"></script>
+    <script src="~/jquery/jquery.js"></script>
+    <script src="~/popper.js/umd/popper.js"></script>
+
+    <script src="~/font-awesome/js/all.js"></script>
+    <script src="~/twitter-bootstrap/js/bootstrap.js"></script>
     <script src="_framework/blazor.server.js"></script>
     <script src="_content/BlazorInputFile/inputfile.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,17 +1,16 @@
 ﻿
 <div class="container">
-    <InputFile  OnChange="HandleFileSelected" accept="image/x-png,image/gif,image/jpeg" />
-
+    <div class="row">
+        <InputFile OnChange="HandleFileSelected" accept="image/x-png,image/gif,image/jpeg" />
+    </div>
     @* ImageView *@
-    <ul class="row">
-        @for (int i = 0; i < imageCount; i++)
+    <ul class="d-flex my-2">
+
+        @foreach (var data in imageData)
         {
-            <li class="list-group-item m-1 col-sm-1 col-md-3">
-                <div class="d-flex align-content-center justify-content-start">
-                    <p class="d-flex justify-content-center text-danger">@Images[i].ImageName</p>
-                    <div class="container m-2">
-                        <img class="my-3" style='height: 100%; width: 100%; object-fit: contain' src=@imageData[i] />
-                    </div>
+            <li class="list-group-item mx-2 " style='width: 100%;height: 100%;'>
+                <div class="d-flex m-1" style='width: 100px;'>
+                    <img style='max-width: 100%; object-fit: contain' src="@data" />
                 </div>
             </li>
         }
@@ -22,7 +21,7 @@
 
 @code {
     [Parameter]
-    public List<Models.Image> Images { get; set; }
+    public ICollection<Models.Image> Vallue { get; set; }
 
     int imageCount = 0;
 
@@ -31,26 +30,39 @@
 
     Models.Image Image = new Models.Image();
 
-    async Task HandleFileSelected(IFileListEntry[] files)
+    [Parameter]
+    public EventCallback<ICollection<Models.Image>> VallueChanged { get; set; }
+
+    async Task<ICollection<Models.Image>> HandleFileSelected(IFileListEntry[] files)
     {
-        if (Images == null)
-        {
-            Images = new List<Models.Image>();
-        }
         file = files.FirstOrDefault();
+        if (Vallue == null)
+        {
+            Vallue = new List<Models.Image>();
+        }
+
+        if (Image == null)
+        {
+            Image = new Models.Image();
+        }
 
         using (MemoryStream ms = new MemoryStream((int)file.Size + 1))
         {
+
             await file.Data.CopyToAsync(ms);
             Image.Data = ms.ToArray();
         }
+
         Image.ImageName = file.Name;
         string byte64 = Convert.ToBase64String(Image.Data);
         imageData.Add(new string("data:image/gif;base64," + byte64));
 
-        Images.Add(Image);
+        Vallue.Add(Image);
         Image = new Models.Image();
         imageCount++;
+        return Vallue;
     }
+
+
 }
 
