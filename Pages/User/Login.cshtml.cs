@@ -13,13 +13,11 @@ namespace LojaVirtual
 {
     public class LoginModel : PageModel
     {
-        private readonly LojaVirtual.Models.LojaVirtualContext _context;
         [BindProperty]
         public Models.User tempUser { get; set; }
 
-        public LoginModel(LojaVirtual.Models.LojaVirtualContext context)
+        public LoginModel()
         {
-            _context = context;
         }
 
         public IActionResult OnGet()

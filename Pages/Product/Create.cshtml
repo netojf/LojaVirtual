@@ -1,26 +1,14 @@
 ﻿@page "{handler?}"
+@using Microsoft.AspNetCore.Components
 
 @model LojaVirtual.Pages.Product.CreateModel
-
 @{
-    ViewData["Title"] = "Create";
-    Layout = "_ManagementLayout";
+  ViewData["Title"] = "Create";
+  Layout = "~/Pages/Management/Shared/_Layout.cshtml";
 }
 
 <div class="container mb-2">
-    <component type="typeof(Product.Components.ProductFormCreate)" render-mode="ServerPrerendered" />
+  <component type="typeof(Product.Components.ProductFormCreate)" render-mode="Server" />
+  @* Localizar *@
+  <a asp-page="Index" class="btn btn-danger">Voltar à Lista</a>
 </div>
-
-<div>
-    @* Localizar *@
-    <a asp-page="Index" class="btn btn-danger">Voltar à Lista</a>
-</div>
-
-
-
-@section Scripts {
-    <script src="_framework/blazor.server.js"></script>
-    <script src="_content/BlazorInputFile/inputfile.js"></script>
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

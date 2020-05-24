@@ -115,26 +115,8 @@ namespace LojaVirtual.Pages.Product
             return RedirectToPage("./Index");
         }
 
-        public PartialViewResult OnPostMyPartial()
-        
-        {
-            var part = new PartialViewResult()
-            {
-                ViewName = "Shared/_PartialTest"
-            };
-            return part; 
-        }
 
 
-        public void OnGetUpdateValue()
-        {
-
-        }
-
-        public void OnPostUpdateValue()
-        {
-
-        }
         #endregion
 
 

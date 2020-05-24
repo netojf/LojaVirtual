@@ -1,79 +1,99 @@
-﻿@*@page*@ 
+﻿@*@page*@
 @model LojaVirtual._ProductCardModel
 @*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+  For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-<div class="col-lg-4 col-md-6 py-4 px-0" >
-    <div class="container">
-        <div class="card-deck flex-row m-2">
-            <div class="card h-100">
+<div class="col-lg-4 col-md-6 py-4 px-0">
+  <div class="container">
+    <div class="card-deck flex-row m-2">
+      <div class="card h-100 p-2">
 
-                <a asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId" class="flex-row" style="color:#000000; text-decoration:none">
+        <a asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId" class="flex-row" style="color:#000000; text-decoration:none">
 
-                    <!-- #region Image -->
-                    @if (@Model.Product.ProductImage != null && Model.Product.Images != null)
-                    {
-                        if (Model.Product.Images.Count > 0)
-                        {
-                            int imageIndex = (int)Model.Product.ProductImage;
-                            Models.Image img = Model.Product.Images.ElementAt(imageIndex);
-                            string byte64 = new string("data:image/gif;base64," + Convert.ToBase64String(img.Data)) ;
-                            <img width="700" height="200" class="card-img-top" src="@byte64" alt="">
-                        }
-                        else
-                        {
-                            <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
-                        }
+          <!-- #region Image -->
+          @if (@Model.Product.ProductImage != null && Model.Product.Images != null)
+          {
+            if (Model.Product.Images.Count > 0)
+            {
+              int imageIndex = (int)Model.Product.ProductImage;
+              Models.Image img = Model.Product.Images.ElementAt(imageIndex);
+              string byte64 = new string("data:image/gif;base64," + Convert.ToBase64String(img.Data));
+              <img width="700" height="200" class="card-img-top" style="object-fit: contain" src="@byte64" alt="">
+            }
+            else
+            {
+              <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
+            }
 
-                    }
-                    else
-                    {
-                        <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
-                    }
-                    <!-- #endregion -->
-                    <!-- #region Properties -->
+          }
+          else
+          {
+            <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
+          }
+          <!-- #endregion -->
+          <!-- #region Properties -->
 
-                    <div class="card-body ">
-                        <h4 class="card-title ">@Model.Product.Name </h4>
-                        <p class="card-text nounderline">@Model.Product.Description</p>
-                        <h5>R$ @Model.Product.Price </h5>
+          <div class="card-body ">
+            <h4 class="card-title ">@Model.Product.Name </h4>
+            <p class="card-text nounderline">@Model.Product.Description</p>
+            <h5>R$ @Model.Product.Price </h5>
 
-                    </div>
+          </div>
 
-                    <!-- #endregion -->
-                </a>
+          <!-- #endregion -->
+        </a>
 
-                <!-- #region Controls -->
+        <!-- #region Controls -->
 
-                <div class="d-flex justify-content-center">
-
-                    <form class="form-inline" method="post">
-
-                        <div class="form-group d-flex">
-                            <button  asp-page-handler="AddItem" asp-route-product=@Model.Product.ProductId  asp-route-category=@Model.Product.Category.CategoryId type="submit" class="btn btn-info mb-1 btn-block">Adicionar ao Carrinho</button>
-                        </div>
-
-                        <div class="form-group d-flex">
-                            <button type="submit" asp-page-handler="AddItemToFav" asp-route-product=@Model.Product.ProductId class="btn btn-danger mb-1 btn-block">Adicionar aos Favoritos</button>
-                        </div>
-
-                    </form>
-                </div>
-
-                <!-- #endregion -->
-
-                <!-- #region Classification -->
-                @* todo: classification of the products
-        <div class="card-footer">
-            <small class="text-muted">★ ★ ★ ★ ☆</small>
+        <div class="container-fluid">
+          <form class="row" method="post">
+            <button class="btn btn-info  btn-block" data-toggle="modal" data-target="#SuccessModal" asp-page-handler="AddItem" asp-route-product=@Model.Product.ProductId asp-route-category=@Model.Product.Category.CategoryId type="submit">Adicionar ao Carrinho</button>
+          </form>
         </div>
-                *@
-                <!-- #endregion -->
 
-            </div>
+        <div class="container-fluid">
+          <div class="row">
+            
+            <a asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId" class="btn btn-info m-1 p-3 btn-block" >Visualizar</a>
+
+          </div>
         </div>
+
+
+        @*<div class="form-group m-1 row">
+        <button type="submit" asp-page-handler="AddItemToFav"  asp-route-product=@Model.Product.ProductId class="btn btn-danger mb-1 btn-block">Adicionar aos Favoritos</button>
+    </div>*@
+
+
+
+        <!-- #endregion -->
+        <!-- #region Classification -->
+        @* todo: classification of the products
+    <div class="card-footer">
+        <small class="text-muted">★ ★ ★ ★ ☆</small>
     </div>
+        *@
+        <!-- #endregion -->
+
+      </div>
+    </div>
+  </div>
 </div>
 
 
+<div class="modal fade" id="SuccessModal" tabindex="-1" role="dialog" aria-labelledby="SucessMessage" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-success" id="SucessMessage">Enviado com Sucesso!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>

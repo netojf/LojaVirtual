@@ -7,9 +7,9 @@
 <!-- #region NavBar -->
 
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-0">
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-0" >
     <div class="container">
-        <a class="navbar-brand" asp-area="" asp-page="/Index">LojaVirtual</a>
+        <a class="navbar-brand text-light" asp-area="" asp-page="/Index">LojaVirtual</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -17,20 +17,18 @@
         </button>
 
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-            <partial name="_LoginPartial" model="new _LoginPartialModel()" />
-
-            
+            <partial name="_LoginPartial" model="new LoginModel()" />
             <ul class="navbar-nav flex-grow-1">
 
                 <!-- #region Home -->
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                    <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
                 </li>
                 <!-- #endregion -->
                 <!-- #region Categories -->
                 <li class="nav-item">
                     <div class="dropdown border-0">
-                        <button class="btn dropdown-toggle nav-link text-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn dropdown-toggle nav-link text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Categorias
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -52,7 +50,7 @@
                     if (LoginManagement.TempUser.IsAdmin)
                     {
                        <li class="nav-item m-1 row">
-                            <a asp-page="/Management/ManagementIndex" asp-page-handler="" class="nav-link text-dark">
+                            <a asp-page="/Management/Index" asp-page-handler="" class="nav-link text-light">
                                 <span class="fas fa-eye" style="font-size: 1em;">
                                 </span>
                                 Administrativo

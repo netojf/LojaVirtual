@@ -46,12 +46,16 @@
                             </td>
                         </tr>
 
-                    }
-                    else
-                    {
-
-                        <!-- #region Product -->
-                        //todo: a partial of this
+                        }
+                        else
+                        {
+                            using (Models.LojaVirtualContext ctx = new Models.LojaVirtualContext())
+                            {
+                                product.Images = ctx.Images.Where(img => img.Product == product).ToList();
+                            }
+                        <!--
+                            #region Product -->
+//todo: a partial of this
                         <tr>
                             <td class="col-sm-8 col-md-6">
                                 <div class="media">

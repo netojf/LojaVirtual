@@ -9,7 +9,7 @@ namespace LojaVirtual
 {
 	public static class LoginManagement
 	{
-		public static bool IsLogged { get; private set; }
+		public static bool IsLogged { get; private set; } = false;
 		public static Models.User TempUser { get; set; }
 
 		//todo: Make this a Async method

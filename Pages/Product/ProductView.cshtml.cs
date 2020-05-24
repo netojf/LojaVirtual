@@ -99,7 +99,10 @@ namespace LojaVirtual
                     {
                         order.Quantity = 1; 
                     }
-                    order.Quantity += 1; 
+                    else
+          {
+            order.Quantity += 1;
+          }
 
                 }
 

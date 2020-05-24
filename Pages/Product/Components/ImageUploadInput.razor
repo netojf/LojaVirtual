@@ -1,68 +1,90 @@
 ﻿
-<div class="container">
-    <div class="row">
-        <InputFile OnChange="HandleFileSelected" accept="image/x-png,image/gif,image/jpeg" />
-    </div>
-    @* ImageView *@
-    <ul class="d-flex my-2">
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">
+      <i class="fas fa-upload"></i>
+    </span>
 
-        @foreach (var data in imageData)
-        {
-            <li class="list-group-item mx-2 " style='width: 100%;height: 100%;'>
-                <div class="d-flex m-1" style='width: 100px;'>
-                    <img style='max-width: 100%; object-fit: contain' src="@data" />
-                </div>
-            </li>
-        }
-    </ul>
+  </div>
+  <div class="custom-file">
+    <InputFile class="custom-file-input" OnChange="HandleFileSelected" accept="image/x-png,image/gif,image/jpeg"
+               aria-describedby="inputGroupFileAddon01" />
+    <label class="custom-file-label" for="inputGroupFile01">Carregue uma imagem</label>
+  </div>
+</div>
+
+
+@* ImageView *@
+<div class="container-fluid my-3" style="background-color: DarkViolet ; height: 100%;">
+  <div class="row justify-content-around p-1">
+
+    @{
+      foreach (var imgData in imageDatas)
+      {
+        <div class="card m-1" style="width: 18rem; height: 18rem;background-color:Crimson;">
+          <div class="card-header text-light">@imgData.name</div>
+          <div class="card-body" style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit:contain;">
+            <img class="card-img p-1" src="@imgData.string64Data" style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit:contain;" alt="product">
+          </div>
+        </div>
+      }
+    }
+  </div>
 </div>
 
 
 
-@code {
-    [Parameter]
-    public ICollection<Models.Image> Vallue { get; set; }
 
-    int imageCount = 0;
 
-    IFileListEntry file;
-    List<string> imageData = new List<string>();
+@code{
 
-    Models.Image Image = new Models.Image();
+  class ImageData
+  {
+    public string name;
+    public string string64Data;
+  }
 
-    [Parameter]
-    public EventCallback<ICollection<Models.Image>> VallueChanged { get; set; }
+  [Parameter]
+  public ICollection<Models.Image> ModelImages { get; set; }
 
-    async Task<ICollection<Models.Image>> HandleFileSelected(IFileListEntry[] files)
+  int imageCount = 0;
+
+  IFileListEntry file;
+  List<ImageData> imageDatas = new List<ImageData>();
+
+  Models.Image Image = new Models.Image();
+
+  [Parameter]
+  public EventCallback<ICollection<Models.Image>> ModelImagesChanged { get; set; }
+
+  async Task<ICollection<Models.Image>> HandleFileSelected(IFileListEntry[] files)
+  {
+    file = files.FirstOrDefault();
+    if (ModelImages == null)
     {
-        file = files.FirstOrDefault();
-        if (Vallue == null)
-        {
-            Vallue = new List<Models.Image>();
-        }
-
-        if (Image == null)
-        {
-            Image = new Models.Image();
-        }
-
-        using (MemoryStream ms = new MemoryStream((int)file.Size + 1))
-        {
-
-            await file.Data.CopyToAsync(ms);
-            Image.Data = ms.ToArray();
-        }
-
-        Image.ImageName = file.Name;
-        string byte64 = Convert.ToBase64String(Image.Data);
-        imageData.Add(new string("data:image/gif;base64," + byte64));
-
-        Vallue.Add(Image);
-        Image = new Models.Image();
-        imageCount++;
-        return Vallue;
+      ModelImages = new List<Models.Image>();
     }
 
+    if (Image == null)
+    {
+      Image = new Models.Image();
+    }
 
+    using (MemoryStream ms = new MemoryStream((int)file.Size + 1))
+    {
+
+      await file.Data.CopyToAsync(ms);
+      Image.Data = ms.ToArray();
+    }
+
+    Image.ImageName = file.Name;
+    string byte64 = Convert.ToBase64String(Image.Data);
+    imageDatas.Add(new ImageData() { name = Image.ImageName, string64Data = new string("data:image/gif;base64," + byte64) });
+
+    ModelImages.Add(Image);
+    Image = new Models.Image();
+    imageCount++;
+    return ModelImages;
+  }
 }
 

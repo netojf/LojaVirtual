@@ -1,162 +1,155 @@
 ﻿
 @inject NavigationManager NavigationManager
 
-<EditForm Model="@Product" OnValidSubmit="SubmitForm">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    @* Name *@
-    <div class="form-group">
-        <label>Nome</label>
-        <InputText @bind-Value="Product.Name" />
-    </div>
-    @* Description *@
-    <div class="form-group">
-        <label>Descrição</label>
-        <InputText @bind-Value="Product.Description" />
-    </div>
-    @* Brand *@
-    <div class="form-group">
-        <label>Marca</label>
-        <InputText @bind-Value="Product.Brand" />
-    </div>
-    @* Price *@
-    <div class="form-group">
-        <label>Preço</label>
-        <InputNumber  @bind-Value="Product.Price" />
-    </div>
-    @* Category *@
-    <div class="form-group">
-        <label>Categoria</label>
-        <select @onchange="SelectCategory">
-            <option value="">Selecione uma Categoria</option>
-            @{
-                foreach (var category in categories)
-                {
-                    <option value="@category.CategoryId">@category.Name</option>
-                }
-            }
-        </select>
-    </div>
-    @* Images *@
-    <div class="form-group">
-        @{
-            if (Product.Images == null)
-            {
-                Product.Images = new List<Models.Image>();
-            }
-        }
-        <ImageUploadInput @bind-Vallue="Product.Images" />
-    </div>
-    @* Product Image *@
-<div class="form-group">
-    @if (Product.Images != null)
-    {
-        Product.ProductImage = 0;
-    }
-    <label>Imagem Principal</label>
-    
-    <select @onchange="SelectMainImage"  @onclick="selectClick" >
 
-        <option value="">Escolha uma Imagem Principal</option>
-        @if (Product.Images != null)
+<EditForm Model="@Product" OnValidSubmit="SubmitForm" class="m-1">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
+  @* Name *@
+  <div class="form-group">
+    <label>Nome</label>
+    <InputText class="w-100" @bind-Value="Product.Name" />
+  </div>
+  @* Description *@
+  <div class="form-group">
+    <label>Descrição</label>
+    <InputText class="w-100" @bind-Value="Product.Description" />
+  </div>
+  @* Brand *@
+  <div class="form-group">
+    <label>Marca</label>
+    <InputText class="w-100" @bind-Value="Product.Brand" />
+  </div>
+  @* Price *@
+  <div class="form-group">
+    <label>Preço</label>
+    <InputNumber class="w-100" @bind-Value="Product.Price" />
+  </div>
+  @* Category *@
+  <div class="form-group">
+    <label>Categoria</label>
+    <select @onchange="SelectCategory">
+      <option value="">Selecione uma Categoria</option>
+      @{
+        foreach (var category in categories)
         {
-            foreach (var image in Product.Images)
-            {
-                <option value="@aux">@image.ImageName</option>
-                aux++;
-            }
+          <option value="@category.CategoryId">@category.Name</option>
         }
-
+      }
     </select>
-</div>
+  </div>
 
-    <div class="row">
-        <button type="submit" class="btn btn-danger btn-block">
-            <span class="fas fa-send" style="font-size:large"></span>
-        </button>
-    </div>
+
+  @* Images *@
+  <div class="form-group">
+    @{
+      if (Product.Images == null)
+      {
+        Product.Images = new List<Models.Image>();
+      }
+    }
+    <ImageUploadInput @bind-ModelImages="Product.Images" />
+
+  </div>
+
+
+  @* Product Image *@
+  <div class="form-group">
+    <label>Imagem Principal</label>
+    <select @onmouseover="ProductImagePop" @bind="Product.ProductImage">
+      <option value="">Selecione uma Imagem</option>
+      @foreach (var image in Product.Images)
+      {
+        <option value="@image.ImageId">@image.ImageName</option>
+      }
+    </select>
+
+
+  </div>
+
+  @* Submit Button *@
+  <div class="row">
+    <button type="submit" class="btn btn-success btn-block m-1 p-2">
+      <i class="fas fa-save" style="font-size:50px"></i>
+    </button>
+  </div>
 
 </EditForm>
 
 
+
+
 @code
 {
-    public Models.Product Product { get; set; } = new Models.Product();
-    readonly List<Models.Category> categories;
-    bool registering = true;
-    int aux = 0;
+  [Parameter]
+  public Models.Product Product { get; set; } = new Models.Product();
+  readonly List<Models.Category> categories;
+  int catId;
 
+  void ProductImagePop()
+  {
 
-    public ProductFormCreate()
+  }
+
+  public ProductFormCreate()
+  {
+    using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
     {
-        using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
-        {
-            categories = ctxt.Categories.ToList();
-        }
+      categories = ctxt.Categories.ToList();
+    }
+  }
+
+
+  void SelectCategory(ChangeEventArgs e)
+  {
+    Models.Category cat;
+
+    catId = int.Parse((string)e.Value);
+  }
+
+
+  void SubmitForm()
+  {
+    if (Product == null)
+    {
+      return;
     }
 
-    void SelectMainImage(ChangeEventArgs e)
+    foreach (var image in Product.Images)
     {
-        int val = int.Parse((string)e.Value);
-        Product.ProductImage = val;
-
+      image.Product = Product;
     }
 
-    void selectClick(EventArgs e)
-    {
+    //if (Product.Category == null)
+    //{
+    //  Product.Category = categories[0];
+    //}
 
+    if (Product.ProductImage == null)
+    {
+      Product.ProductImage = 0;
     }
 
-
-
-    void SelectCategory(ChangeEventArgs e)
+    using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
     {
-        Models.Category cat;
-        using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
-        {
-            int id = int.Parse((string)e.Value);
-            cat = ctxt.Categories.Find(id);
-        }
-        Product.Category = cat;
-        Product.Category.CategoryId = default;
+
+      foreach (var image in Product.Images)
+      {
+        ctxt.Images.Add(image);
+      }
+      Models.Category cat =
+      ctxt.Categories.FirstOrDefault(c => c.CategoryId ==catId);
+      Product.Category = default;
+      //Product.Category.CategoryId = default;
+      if (cat.Products == null)
+      {
+        cat.Products = new List<Models.Product>();
+      }
+      cat.Products.Add(Product);
+      ctxt.Products.Add(Product);
+      ctxt.SaveChanges();
     }
+    NavigationManager.NavigateTo("/Product/Index", true);
+  }
 
-    void NewRegister()
-    {
-        registering = true;
-        Product = new Models.Product();
-    }
-
-
-    void SubmitForm()
-    {
-        if (Product == null)
-        {
-            return;
-        }
-        foreach (var image in Product.Images)
-        {
-            image.Product = Product;
-        }
-        if (string.IsNullOrEmpty(Product.Category.Name))
-        {
-            Product.Category = categories[0];
-        }
-        if (Product.ProductImage == null)
-        {
-            Product.ProductImage = 0; 
-        }
-
-        using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
-        {
-            ctxt.Products.Add(Product);
-            foreach (var image in Product.Images)
-            {
-                ctxt.Images.Add(image);
-            }
-
-            ctxt.SaveChanges();
-        }
-        NavigationManager.NavigateTo("/Product/Index", true);
-    }
 }

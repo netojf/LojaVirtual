@@ -1,6 +1,8 @@
 ﻿
 <!DOCTYPE html>
-<html lang="en">
+@await Html.PartialAsync("~/Pages/Management/Shared/_ManagerLayout.cshtml", new Pages.Management.Shared._ManagerLayoutModel(), null)
+<html>
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,51 +12,29 @@
   <link rel="stylesheet" href="~/css/site.css" />
   <base href="~/" />
 </head>
+
 <body>
   <header>
 
     @await Html.PartialAsync("_NavBar", new _NavBarModel(), ViewData)
 
   </header>
-
-  <!-- #region Carousel -->
-  @*@await Html.PartialAsync("_Carousel3I", new _Carousel3IModel(), ViewData)*@
-  <!-- #endregion -->
-  <!-- #region SearchBar -->
-  @await Html.PartialAsync("_SearchBar", new _SearchBarModel(), ViewData)
-  <!-- #endregion -->
-  <!-- #region SidePanel - Commented -->
-  @*
-    <div class="row">
-        <div class="container-fluid">
-
-            <!-- #region Page Content -->
-            <div class="row m-2">
-
-                <!-- #region SidePanel -->
-                <div class="col-lg-3">
-                    @await Html.PartialAsync("_SidePanel", new _SidePanelModel(), ViewData)
-                </div>
-                <!-- #endregion -->
-
-            </div>
-
-
+  <div class="container-fluid px-0">
+    <div class="row no-gutters min-vh-100">
+      <div class="col-sm-3 bg-dark flex-grow-1" id="sidebar">
+        <div class="py-2 sticky-top flex-grow-1">
+          <div class="nav flex-sm-column flex-no-wrap align-items-center align-items-sm-start pt-2">
+            <a asp-page="/Management/ManagementIndex" class="text-white nav-link h2">Administrativo</a>
+            <a asp-page="/Product/Index" class="text-white nav-link">Produtos</a>
+            <a asp-page="/Category/Index" class="text-white nav-link">Categorias</a>
+          </div>
         </div>
+      </div>
+      <div class="col p-4" id="main">
+        @RenderBody()
+      </div>
     </div>
-
-  *@
-
-  <!-- #endregion -->
-  <!-- #region Body -->
-  <div class="container">
-    <main role="main" class="pb-3">
-      @RenderBody()
-    </main>
   </div>
-  <!-- #endregion -->
-  <!-- #endregion -->
-
 
   <script src="~/jquery/jquery.js"></script>
   <script src="~/popper.js/umd/popper.js"></script>
@@ -66,3 +46,4 @@
   @RenderSection("Scripts", required: false)
 </body>
 </html>
+

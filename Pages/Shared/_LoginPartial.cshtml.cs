@@ -9,7 +9,7 @@ namespace LojaVirtual
 {
     public class _LoginPartialModel : PageModel
     {
-
+        
 
         public _LoginPartialModel()
         {
