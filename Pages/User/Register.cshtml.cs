@@ -28,7 +28,6 @@ namespace LojaVirtual
         #endregion
 
         #region Methods
-
         public IActionResult OnGet()
         {
             if (LoginManagement.IsLogged)
@@ -59,9 +58,9 @@ namespace LojaVirtual
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.TryAddModelError("", "Something gone wrong");
+                ModelState.TryAddModelError("", ex.Message);
                 return Page();
             }
 

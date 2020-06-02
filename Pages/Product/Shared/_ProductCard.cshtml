@@ -1,4 +1,4 @@
-﻿@*@page*@
+﻿
 @model LojaVirtual._ProductCardModel
 @*
   For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,6 +32,7 @@
             <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
           }
           <!-- #endregion -->
+
           <!-- #region Properties -->
 
           <div class="card-body ">
@@ -48,14 +49,14 @@
 
         <div class="container-fluid">
           <form class="row" method="post">
-            <button class="btn btn-info  btn-block" data-toggle="modal" data-target="#SuccessModal" asp-page-handler="AddItem" asp-route-product=@Model.Product.ProductId asp-route-category=@Model.Product.Category.CategoryId type="submit">Adicionar ao Carrinho</button>
+            <button class="btn btn-info  btn-block" data-toggle="modal" data-target="#SuccessModal" asp-page-handler="AddItem" asp-route-prodId=@Model.Product.ProductId asp-route-catId=@Model.Product.Category.CategoryId type="submit">Adicionar ao Carrinho</button>
           </form>
         </div>
 
         <div class="container-fluid">
           <div class="row">
             
-            <a asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId" class="btn btn-info m-1 p-3 btn-block" >Visualizar</a>
+            <a class="btn btn-info m-1 p-3 btn-block" asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId"  >Visualizar</a>
 
           </div>
         </div>

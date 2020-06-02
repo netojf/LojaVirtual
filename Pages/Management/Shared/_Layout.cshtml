@@ -1,6 +1,6 @@
-﻿
-<!DOCTYPE html>
-@await Html.PartialAsync("~/Pages/Management/Shared/_ManagerLayout.cshtml", new Pages.Management.Shared._ManagerLayoutModel(), null)
+﻿<!DOCTYPE html>
+@using System.Web;
+
 <html>
 
 <head>
@@ -15,6 +15,14 @@
 
 <body>
   <header>
+    @{
+      @if (!LoginManagement.IsAdmin)
+        {
+          
+            Context.Response.Redirect("/Index");
+        }
+
+      }
 
     @await Html.PartialAsync("_NavBar", new _NavBarModel(), ViewData)
 

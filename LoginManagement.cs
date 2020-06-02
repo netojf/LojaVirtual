@@ -9,40 +9,49 @@ namespace LojaVirtual
 {
 	public static class LoginManagement
 	{
-		public static bool IsLogged { get; private set; } = false;
+
+		public static bool IsLogged { get; set; } = false; 
+
 		public static Models.User TempUser { get; set; }
+		public static bool IsAdmin
+		{
+			get
+			{
+				if (TempUser == null)
+				{
+					return false;
+				}
+				if (TempUser.IsAdmin)
+				{
+					return true;
+				}
+				else return false;
+			}
+			private set => IsAdmin = value;
+		}
 
 		//todo: Make this a Async method
 		public static async Task<bool> LoginAsync(string userName, string password)
 		{
-			using (LojaVirtual.Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
+			using Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext();
+			TempUser = await ctxt.Users
+			.SingleOrDefaultAsync(x => x.Name == userName && x.Password == password);
+
+			if (TempUser != null)
 			{
-
-				try
-				{
-					TempUser = await ctxt.Users
-					.SingleOrDefaultAsync(x => x.Name == userName && x.Password == password);
-
-					if (TempUser != null)
-					{
-						IsLogged = true; 
-					}
-					else
-					{
-						throw new Exception(); 
-					}
-				}
-				catch (Exception ex)
-				{
-					throw ex;
-				}
-				return IsLogged; 
+				IsLogged = true;
 			}
+			else
+			{
+				IsLogged = false;
+			}
+			return IsLogged;
 		}
 
-		public static bool Logoff()
-		{
-			return IsLogged = false;
+			public static bool Logoff()
+			{
+				return IsLogged = false;
+			}
+
 		}
 	}
-}

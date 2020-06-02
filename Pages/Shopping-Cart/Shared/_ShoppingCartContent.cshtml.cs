@@ -6,7 +6,7 @@ using LojaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace LojaVirtual
+namespace LojaVirtual.Pages.Shopping_Cart.Shared
 {
     public class _ShoppingCartContentModel : PageModel
     {
@@ -30,7 +30,7 @@ namespace LojaVirtual
 
         #region Methods
 
-        public double GetOrderPrice(ProductOrder order, Product product)
+        public double GetOrderPrice(ProductOrder order, Models.Product product)
         {
             double orderPrice = ((double)order.Quantity) * product.Price;
 
@@ -69,7 +69,7 @@ namespace LojaVirtual
             foreach (var order in ProductOrders)
             {
                 double orderprice = 0;
-                foreach (Product product in order.Products)
+                foreach (Models.Product product in order.Products)
                 {
                     orderprice += product.Price;
                 }

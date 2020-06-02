@@ -155,7 +155,7 @@ namespace LojaVirtual
         await ctxt.SaveChangesAsync();
       }
       //todo: redirecto to a temporary Message then to lastPage
-      return RedirectToPage("~/Pages/Shopping-Cart/ShoppingCart");
+      return RedirectToPage("/Shopping-Cart/ShoppingCart");
     }
 
 		public async Task<IActionResult> OnGet(int id)

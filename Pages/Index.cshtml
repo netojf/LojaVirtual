@@ -1,7 +1,28 @@
-﻿@page 
+﻿@page
+
+@using Microsoft.EntityFrameworkCore;
+
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+  ViewData["Title"] = "Home page";
 }
-<h1 class="m-auto"> Bem Vindo!</h1>
+<div class="row">
+  <h1 class="m-auto"> Bem Vindo!</h1>
+
+</div>
+
+@{
+  Models.Product p;
+  using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
+  {
+    p = await ctxt.Products.Include(p => p.Images).FirstOrDefaultAsync();
+  }
+  if (p != null)
+  {
+
+    <component type="typeof(Product.Components.ProductForm)" param-Product="@p" render-mode="ServerPrerendered" />
+
+  }
+}
+
 

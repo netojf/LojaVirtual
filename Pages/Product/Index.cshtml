@@ -1,49 +1,135 @@
-﻿@page
+﻿@page "{handler?}"
+
 @model LojaVirtual.Pages.Product.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Pages/Management/Shared/_Layout.cshtml";
+  ViewData["Title"] = "Index";
+  Layout = "~/Pages/Management/Shared/_Layout.cshtml";
 }
 
 <h1>Índice</h1>
 
 <p>
-    <a class="btn btn-primary" asp-page="Create">Novo Produto</a>
+  <a class="btn btn-primary" asp-page="Create">Novo Produto</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Product) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a class="btn btn-secondary" asp-page="./Edit" asp-route-id="@item.ProductId">Editar</a> |
-                <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.ProductId">Visualizar</a> |
-                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ProductId">Deletar</a>
-            </td>
-        </tr>
-}
-    </tbody>
+  <thead>
+    <tr>
+      <th>
+        @Html.DisplayNameFor(model => model.Products[0].Name)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Products[0].Description)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Products[0].Price)
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var product in Model.Products)
+    {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelproduct => product.Name)
+        </td>
+        <td>
+          @Html.DisplayFor(modelproduct => product.Description)
+        </td>
+        <td>
+          @Html.DisplayFor(modelproduct => product.Price)
+        </td>
+        <td>
+          <a class="btn btn-secondary text-light" asp-page="./Edit" asp-route-id="@product.ProductId">Editar</a> |
+
+
+          <a class="btn btn-primary text-light" data-toggle="modal" data-target="#showEntryModal">Visualizar</a> |
+
+          <!-- #region ShowModal -->
+          <div class="modal fade" id="showEntryModal" tabindex="-1" role="dialog" aria-labelledby="showEntryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="showEntryModalLabel">@product.Name</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="container-fluid">
+
+                    <!-- #region Properties -->
+
+                    @foreach (var propInfo in product.GetType().GetProperties())
+                    {
+                    <div class="row">
+
+                      @if ((propInfo.PropertyType.IsPrimitive || propInfo.PropertyType == typeof(string)) && propInfo.PropertyType != typeof(byte))
+                      {
+                        <label class="col-6 label text-dark">@propInfo.Name</label>
+                        <p class="col-6 text text-dark">@propInfo.GetValue(product)</p>
+                      }
+
+                    </div>
+                    }
+                    <!-- #endregion -->
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- #endregion -->
+
+          <!-- #region DeleteEntry -->
+
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Deletar</button>
+
+          <!-- #region DeleteModal -->
+
+          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="card w-100">
+                        <div class="card-body">
+
+                          <h5 id="deleteLabel" class="card-title text-center">Tem certeza que quer deletar @product.Name?</h5>
+
+                          <form class="form form-inline justify-content-center" asp-page-handler="delete" asp-route-id="@product.ProductId" method="post">
+
+                            <div class="form-label-group m-1">
+                              <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancelar</button>
+                            </div>
+
+                            <div class="form-label-group m-1">
+                              <button type="submit"  class="btn btn-danger">Deletar</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- #endregion -->
+          <!-- #endregion -->
+
+        </td>
+      </tr>
+
+    }
+  </tbody>
 </table>
+
+
+

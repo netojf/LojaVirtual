@@ -6,7 +6,7 @@ using LojaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace LojaVirtual
+namespace LojaVirtual.Pages.Shopping_Cart
 {
 	public class ShoppingCartModel : PageModel
 	{

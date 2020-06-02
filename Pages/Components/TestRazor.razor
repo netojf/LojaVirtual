@@ -1,13 +1,4 @@
-﻿@page "/counter"
-@code
-{
-    int i = 2;
-    void Increase()
-    {
-        i++;
-    }
-}
+﻿@using System.IO;
 
-<h1> @i</h1>
-<button class="btn btn-danger" @onclick="Increase">Click</button>
+<input type="file"  id="fileUpload" />
 

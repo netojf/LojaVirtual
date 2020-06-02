@@ -1,5 +1,5 @@
 ﻿@page
-@model LojaVirtual.ShoppingCartModel
+@model LojaVirtual.Pages.Shopping_Cart.ShoppingCartModel
 @{
     ViewData["Title"] = "ShoppingCart";
 }
@@ -18,7 +18,7 @@
 
         }
 
-        @await Html.PartialAsync("Shared/_ShoppingCartContent", new _ShoppingCartContentModel(Model.ShoppingCart.ProductOrders), null);
+        @await Html.PartialAsync("Shared/_ShoppingCartContent", new Shared._ShoppingCartContentModel(Model.ShoppingCart.ProductOrders), null);
         
     }
 }
