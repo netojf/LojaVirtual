@@ -13,14 +13,22 @@
 
 @{
   Models.Product p;
+  Models.Category c;
+  ICollection<Models.Image> i;
   using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
   {
-    p = await ctxt.Products.Include(p => p.Images).FirstOrDefaultAsync();
+    p = await ctxt.Products.Include(p => p.Category).Include(p => p.Images).FirstOrDefaultAsync();
+    c = p.Category;
+    i = p.Images;
+
+
+
   }
+
   if (p != null)
   {
 
-    <component type="typeof(Product.Components.ProductForm)" param-Product="@p" render-mode="ServerPrerendered" />
+    <component type="typeof(Product.Components.ProductForm)" param-Product="@p"  param-ProductCategory="@c" render-mode="ServerPrerendered" />
 
   }
 }

@@ -12,7 +12,7 @@ namespace LojaVirtual
     {
         public IActionResult OnGet()
         {
-            Thread.Sleep(500);
+            Thread.Sleep(2000);
             //todo: Return to last Page
             return RedirectToPage("/Index");
         }

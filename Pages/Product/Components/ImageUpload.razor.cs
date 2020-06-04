@@ -4,34 +4,68 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorInputFile;
+using DocumentFormat.OpenXml.EMMA;
+using LojaVirtual.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace LojaVirtual.Pages.Product.Components
 {
 	public partial class ImageUploadBase : ComponentBase
 	{
-		#region Properties and Fields
-		protected List<ImageData> imagesData { get; set; } = new List<ImageData>();
-
+		private List<ImageData> _imagesData;
 		ICollection<Models.Image> _modelImages;
+		protected IFileListEntry file;
+
+
+
+		#region Properties
+
+		[Parameter]
+		public List<ImageData> ImagesData
+		{
+			get
+			{
+				_imagesData ??= new List<ImageData>();
+				return _imagesData; 
+			}
+			set
+			{
+				if (_imagesData != value && value != null)
+				{
+					_imagesData = value;
+					ImagesDataChanged.InvokeAsync(value);
+				}
+			}
+		}
+
 
 		[Parameter]
 		public ICollection<Models.Image> ModelImages
 		{
-			get => _modelImages;
+			get
+			{
+				_modelImages ??= new List<Models.Image>();
+				return _modelImages;
+			}
 			set
 			{
-					if (_modelImages == value) return;
+				if (_modelImages != value && value != null)
+				{
 					_modelImages = value;
 					ModelImagesChanged.InvokeAsync(value);
+				}
+				
 			}
 		}
+
+
+		[Parameter]
+		public EventCallback<List<ImageData>> ImagesDataChanged { get; set; }
+
+		
 		[Parameter]
 		public EventCallback<ICollection<Models.Image>> ModelImagesChanged { get; set; }
 
-		int imageCount = 0;
-
-		protected IFileListEntry file;
 		#endregion
 
 
@@ -51,11 +85,16 @@ namespace LojaVirtual.Pages.Product.Components
 
 			_image.ImageName = file.Name;
 			string byte64 = Convert.ToBase64String(_image.Data);
-			imagesData.Add(new ImageData() { name = _image.ImageName, string64Data = new string("data:image/gif;base64," + byte64) });
+			int extensionIndex = _image.ImageName.IndexOf('.') + 1;
+			string extension = _image.ImageName.Remove(0, extensionIndex);
+
+			ImagesData.Add(new ImageData() { name = _image.ImageName, string64Data = new string("data:image/" + extension + "; base64," + byte64) });
+			await ImagesDataChanged.InvokeAsync(ImagesData); 
+
+
 
 			ModelImages.Add(_image);
 			_image = new Models.Image();
-			imageCount++;
 			return ModelImages;
 		} 
 		#endregion

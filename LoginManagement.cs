@@ -30,7 +30,6 @@ namespace LojaVirtual
 			private set => IsAdmin = value;
 		}
 
-		//todo: Make this a Async method
 		public static async Task<bool> LoginAsync(string userName, string password)
 		{
 			using Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext();

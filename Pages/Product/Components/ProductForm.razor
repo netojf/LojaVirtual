@@ -10,14 +10,14 @@
   @* Name *@
   <div class="card text-light p-2 m-2" style="background-color:crimson">
     <label>Nome</label>
-    <InputText class=" w-75" @bind-Value="Product.Name" />
+    <InputText class=" w-100 m-2" @bind-Value="Product.Name" />
   </div>
   <hr />
 
   @* Description *@
   <div class="card text-dark p-2 m-2" style="background-color:#F4F5A4">
     <label>Descrição</label>
-    <textarea class="w-75 text-light p-1" rows="3" @bind="Product.Description" style="background-color:#A4A500; border: none;" />
+    <textarea class="w-100 m-2 text-light p-1" rows="3" @bind="Product.Description" style="background-color:#A4A500; border: none;" />
   </div>
   <hr />
 
@@ -41,7 +41,7 @@
   @* Category *@
   <div class="text-dark p-2 m-2 card" style="background-color:yellow">
     <label>Categoria</label>
-    <select class="p-1 m-1 text-dark" @onchange="SelectCategory">
+    <select class="p-1 m-1 text-dark" @bind="ProductCategory.CategoryId" >
       <option value="">Selecione uma Categoria</option>
       @{
         foreach (var category in categories)
@@ -63,9 +63,8 @@
       }
     }
 
-    <ImageUpload @bind-ModelImages="Product.Images"></ImageUpload>
-    <TestComponent @bind-Images="Product.Images"></TestComponent>
-
+    <ImageUpload  @bind-ModelImages="ProductImages" @bind-ImagesData="ImagesData"></ImageUpload>
+    <ImageCard @bind-ImagesData="ImagesData"></ImageCard>
   </div>
 
   <hr />
