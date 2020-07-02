@@ -10,14 +10,16 @@
   @* Name *@
   <div class="card text-light p-2 m-2" style="background-color:crimson">
     <label>Nome</label>
-    <InputText class=" w-100 m-2" @bind-Value="Product.Name" />
+    <InputText class="w-100 form-control" @bind-Value="Product.Name" />
   </div>
   <hr />
 
+  @* todo: this is delaying the load of the page on loading the data *@
   @* Description *@
+
   <div class="card text-dark p-2 m-2" style="background-color:#F4F5A4">
     <label>Descrição</label>
-    <textarea class="w-100 m-2 text-light p-1" rows="3" @bind="Product.Description" style="background-color:#A4A500; border: none;" />
+    <textarea class="w-100 text-light form-control"  rows="3" @bind="Product.Description" style="background-color:#7F802A; border: none;" />
   </div>
   <hr />
 
@@ -26,12 +28,12 @@
     <div class="d-flex  justify-content-around">
       <div class="form-group">
         <label>Marca</label>
-        <InputText class="p-1" @bind-Value="Product.Brand" />
+        <InputText class="p-1 form-control" @bind-Value="Product.Brand" />
       </div>
 
       <div class="form-group ">
         <label>Preço</label>
-        <InputNumber class="p-1" style="min-width: 30px; " @bind-Value="Product.Price" />
+        <InputNumber class="p-1 form-control"  style="min-width: 30px; " @bind-Value="Product.Price" />
       </div>
     </div>
   </div>
@@ -41,7 +43,7 @@
   @* Category *@
   <div class="text-dark p-2 m-2 card" style="background-color:yellow">
     <label>Categoria</label>
-    <select class="p-1 m-1 text-dark" @bind="ProductCategory.CategoryId" >
+    <select class="p-1 m-1 text-dark form-control" @bind="ProductCategory.CategoryId" >
       <option value="">Selecione uma Categoria</option>
       @{
         foreach (var category in categories)
@@ -63,8 +65,9 @@
       }
     }
 
-    <ImageUpload  @bind-ModelImages="ProductImages" @bind-ImagesData="ImagesData"></ImageUpload>
-    <ImageCard @bind-ImagesData="ImagesData"></ImageCard>
+    <ImageUpload  @bind-ModelImages="ProductImages" @bind-ImagesData="ImagesData" ></ImageUpload>
+    <ImageCard @bind-ImagesData="ImagesData" ></ImageCard>
+
   </div>
 
   <hr />
@@ -72,7 +75,7 @@
   <div class="form-group">
     <div class="card m-2 p-2" style="background-color: crimson">
       <label class="text-light">Imagem Principal</label>
-      <select class="p-1 m-1 text-dark" @onmouseover="ProductImagePop" @bind="Product.ProductImage">
+      <select class="p-1 m-1 text-dark form-control" @onmouseover="ProductImagePop" @bind="Product.ProductImage">
         <option value="">Selecione uma Imagem</option>
         @{
           int i = 0;

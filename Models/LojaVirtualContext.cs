@@ -1,13 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.Models
 {
+	public static class MyExtensions
+	{
+		public static IQueryable<object> Set(this DbContext _context, Type t)
+		{
+			return (IQueryable<object>)_context.GetType().GetMethod("Set").MakeGenericMethod(t).Invoke(_context, null);
+		}
+	}
 	public class LojaVirtualContext : DbContext
 	{
 		#region Properties
@@ -64,7 +68,7 @@ namespace LojaVirtual.Models
 				.HasDefaultValue(false);
 			modelBuilder.Entity<User>()
 				.HasMany(p => p.Adresses)
-				.WithOne(a => a.User); 
+				.WithOne(a => a.User);
 			#endregion
 
 			#region CategoryConfig
@@ -103,7 +107,7 @@ namespace LojaVirtual.Models
 			modelBuilder
 					.Entity<ShoppingCart>()
 					.HasMany(s => s.ProductOrders)
-					.WithOne(p => p.ShoppingCart); 
+					.WithOne(p => p.ShoppingCart);
 			#endregion
 
 			#region ProductOrderConfig
@@ -115,7 +119,7 @@ namespace LojaVirtual.Models
 			modelBuilder
 				.Entity<ProductOrder>()
 				.HasMany(o => o.Products)
-				.WithOne(p => p.ProductOrder); 
+				.WithOne(p => p.ProductOrder);
 			#endregion
 
 		}

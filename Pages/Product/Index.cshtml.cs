@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using LojaVirtual.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LojaVirtual.Pages.Product
 {
@@ -33,11 +30,11 @@ namespace LojaVirtual.Pages.Product
 			}
 			Models.Product _product;
 
-			_product = await _context.Products.Include(p => p.Images).FirstAsync(p=> p.ProductId == id);
+			_product = await _context.Products.Include(p => p.Images).FirstAsync(p => p.ProductId == id);
 
 			if (_product != null)
 			{
-				if (_product.Images!= null)
+				if (_product.Images != null)
 				{
 					if (_product.Images.Count > 0)
 					{

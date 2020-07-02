@@ -1,11 +1,6 @@
 ﻿@page
 @model LojaVirtual._NavBarModel
-@*
-  For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
 <!-- #region NavBar -->
-
 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-0">
   <div class="container">
@@ -17,14 +12,9 @@
     </button>
 
     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-      <partial name="_LoginPartial" model="new _LoginPartialModel()" />
+      <component type="typeof(User.Components.LoginNavbar)" render-mode="ServerPrerendered" />
       <ul class="navbar-nav flex-grow-1">
 
-        <!-- #region Home -->
-        @*<li class="nav-item">
-              <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
-          </li>*@
-        <!-- #endregion -->
         <!-- #region Categories -->
         <li class="nav-item">
           <div class="dropdown border-0">
@@ -37,7 +27,7 @@
                 {
                   foreach (var item in lojaVirtualContext.Categories)
                   {
-                    <a asp-page="/Product/Category" asp-page-handler="Get" asp-route-id="@item.CategoryId" class="dropdown-item">@item.Name</a>
+                    <a asp-page="/Product/Category" asp-page-handler="Get" asp-route-catId="@item.CategoryId" class="dropdown-item">@item.Name</a>
                   }
                 }
               }

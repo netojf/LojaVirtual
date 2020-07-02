@@ -1,12 +1,10 @@
-﻿using System;
+﻿using BlazorInputFile;
+using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BlazorInputFile;
-using DocumentFormat.OpenXml.EMMA;
-using LojaVirtual.Models;
-using Microsoft.AspNetCore.Components;
 
 namespace LojaVirtual.Pages.Product.Components
 {
@@ -26,7 +24,7 @@ namespace LojaVirtual.Pages.Product.Components
 			get
 			{
 				_imagesData ??= new List<ImageData>();
-				return _imagesData; 
+				return _imagesData;
 			}
 			set
 			{
@@ -54,7 +52,7 @@ namespace LojaVirtual.Pages.Product.Components
 					_modelImages = value;
 					ModelImagesChanged.InvokeAsync(value);
 				}
-				
+
 			}
 		}
 
@@ -62,7 +60,7 @@ namespace LojaVirtual.Pages.Product.Components
 		[Parameter]
 		public EventCallback<List<ImageData>> ImagesDataChanged { get; set; }
 
-		
+
 		[Parameter]
 		public EventCallback<ICollection<Models.Image>> ModelImagesChanged { get; set; }
 
@@ -89,14 +87,14 @@ namespace LojaVirtual.Pages.Product.Components
 			string extension = _image.ImageName.Remove(0, extensionIndex);
 
 			ImagesData.Add(new ImageData() { name = _image.ImageName, string64Data = new string("data:image/" + extension + "; base64," + byte64) });
-			await ImagesDataChanged.InvokeAsync(ImagesData); 
+			await ImagesDataChanged.InvokeAsync(ImagesData);
 
 
 
 			ModelImages.Add(_image);
 			_image = new Models.Image();
 			return ModelImages;
-		} 
+		}
 		#endregion
 	}
 }

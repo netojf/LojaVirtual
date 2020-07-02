@@ -6,13 +6,14 @@ namespace LojaVirtual.Pages.Product.Components
 	public partial class ImageCardBase : ComponentBase
 	{
 		List<ImageData> _imagesData;
+
 		[Parameter]
 		public List<ImageData> ImagesData
 		{
 			get
 			{
 				_imagesData ??= new List<ImageData>();
-				return _imagesData; 
+				return _imagesData;
 			}
 			set
 			{
@@ -31,6 +32,6 @@ namespace LojaVirtual.Pages.Product.Components
 		{
 		}
 
-	
+
 	}
 }

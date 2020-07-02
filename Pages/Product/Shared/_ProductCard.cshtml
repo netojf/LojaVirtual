@@ -32,7 +32,6 @@
             <img width="700" height="200" class="card-img-top" src="http://placehold.it/700x400" alt="">
           }
           <!-- #endregion -->
-
           <!-- #region Properties -->
 
           <div class="card-body ">
@@ -55,25 +54,25 @@
 
         <div class="container-fluid">
           <div class="row">
-            
-            <a class="btn btn-info m-1 p-3 btn-block" asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId"  >Visualizar</a>
+
+            <a class="btn btn-info m-1 p-3 btn-block" asp-page="/Product/ProductDetail" asp-page-handler="Get" asp-route-id="@Model.Product.ProductId">Visualizar</a>
 
           </div>
         </div>
 
 
         @*<div class="form-group m-1 row">
-        <button type="submit" asp-page-handler="AddItemToFav"  asp-route-product=@Model.Product.ProductId class="btn btn-danger mb-1 btn-block">Adicionar aos Favoritos</button>
-    </div>*@
+              <button type="submit" asp-page-handler="AddItemToFav"  asp-route-product=@Model.Product.ProductId class="btn btn-danger mb-1 btn-block">Adicionar aos Favoritos</button>
+          </div>*@
 
 
 
         <!-- #endregion -->
         <!-- #region Classification -->
         @* todo: classification of the products
-    <div class="card-footer">
-        <small class="text-muted">★ ★ ★ ★ ☆</small>
-    </div>
+          <div class="card-footer">
+              <small class="text-muted">★ ★ ★ ★ ☆</small>
+          </div>
         *@
         <!-- #endregion -->
 
@@ -85,9 +84,16 @@
 
 <div class="modal fade" id="SuccessModal" tabindex="-1" role="dialog" aria-labelledby="SucessMessage" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content-">
       <div class="modal-header">
-        <h5 class="modal-title text-success" id="SucessMessage">Enviado com Sucesso!</h5>
+        @if (LoginManagement.IsLogged)
+        {<h5 class="modal-title text-success" id="SucessMessage">Enviado com Sucesso!</h5>
+        }
+        else
+        {
+          <h5 class="modal-title text-danger" id="SucessMessage">Você precisa estar Conectado</h5>
+
+        }
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

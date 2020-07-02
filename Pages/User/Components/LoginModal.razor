@@ -1,0 +1,69 @@
+﻿@inherits LoginModalBase
+
+
+  <div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay; min-width: 600px;">
+
+    
+    <div class="modal-dialog modal-dialog-centered" role="form">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" @onclick="Close" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body p-3">
+              <h5 class="card-title text-center">Conectar</h5>
+
+              <EditForm Model="@UserData" OnValidSubmit="ValidSubmitAsync" OnInvalidSubmit="InvalidSubmit" class=" m-auto">
+
+                <div class="alert @StatusClass">@StatusMessage</div>
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+                <ValidationSummary />
+                <hr />
+
+                <div class="form-group">
+                  <label for="name" class="text-black">Nome:</label>
+                  <div class="row mx-1">
+                    <InputText id="name" class="p-1 form-control" @bind-Value="UserData.Name" />
+                    <ValidationMessage For="@(()=>UserData.Name)"></ValidationMessage>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="password" class="text-black">Senha:</label>
+                  <div class="row mx-1">
+                    <InputText id="password" type="password" class="p-1 form-control" @bind-Value="UserData.Password" />
+                    <ValidationMessage For="@(()=>UserData.Password)"></ValidationMessage>
+                  </div>
+                </div>
+
+                @* todo: remember password data *@
+                <div class="custom-control custom-checkbox mb-3">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1">
+                  <label class="custom-control-label" for="customCheck1">Lembrar Senha</label>
+                </div>
+
+                <hr class="my-4">
+
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Conectar</button>
+                <hr class="my-4">
+
+                @*TODO: FACEBOOK AND GOOGLE LOGIN *@
+                <button class="btn btn-lg  btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Conectar com Google</button>
+                <button class="btn btn-lg  btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Conectar com Facebook</button>
+              </EditForm>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+@if (ShowBackdrop)
+{
+  <div class="modal-backdrop fade show"></div>
+}

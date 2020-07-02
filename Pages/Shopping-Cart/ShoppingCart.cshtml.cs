@@ -1,10 +1,9 @@
-﻿using System;
+﻿using LojaVirtual.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LojaVirtual.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace LojaVirtual.Pages.Shopping_Cart
 {
@@ -22,7 +21,7 @@ namespace LojaVirtual.Pages.Shopping_Cart
 		public ShoppingCartModel(LojaVirtualContext ctxt)
 		{
 			_lojaVirtualCtxt = ctxt;
-			ShoppingCart = LoginManagement.TempUser.ShoppingCart; 
+			ShoppingCart = LoginManagement.TempUser.ShoppingCart;
 		}
 		#endregion
 
@@ -96,7 +95,7 @@ namespace LojaVirtual.Pages.Shopping_Cart
 			return Page();
 
 
-		} 
+		}
 		#endregion
 
 	}

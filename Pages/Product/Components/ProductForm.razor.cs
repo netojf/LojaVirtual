@@ -1,21 +1,22 @@
 ﻿using LojaVirtual.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.Pages.Product.Components
 {
-  public partial class ProductFormBase : ComponentBase
-  {
+	public partial class ProductFormBase : ComponentBase
+	{
 		#region Fields
 		Models.Product _product;
 		Models.Category _category;
 		protected readonly List<Models.Category> categories;
 		protected int catId;
 		private ICollection<Image> _productImages;
-		List<ImageData> _imagesData; 
+		List<ImageData> _imagesData;
+		private int _productId;
 		#endregion
 
 
@@ -24,6 +25,22 @@ namespace LojaVirtual.Pages.Product.Components
 		NavigationManager NavigationManager { get; set; }
 
 		[Parameter]
+		public int ProductId
+		{
+			get => _productId;
+			set
+			{
+				using (Models.LojaVirtualContext ctxt = new LojaVirtualContext())
+				{
+					Product = ctxt.Products.Include(p => p.Images).Include(p => p.Category).FirstOrDefault(p => p.ProductId == value);
+				}
+				_productId = value;
+				ProductIdChange.InvokeAsync(value);
+				//StateHasChanged(); 
+			}
+		}
+
+
 		public Models.Product Product
 		{
 			get
@@ -36,12 +53,17 @@ namespace LojaVirtual.Pages.Product.Components
 			}
 			set
 			{
-				_product = value;
-				ProductChange.InvokeAsync(value);
+				if (value != _product && value != null)
+				{
+					_product = value;
+					if (Product.Category != null && Product.Category != ProductCategory) ProductCategory = Product.Category;
+					if (Product.Images != null && Product.Images != ProductImages) ProductImages = Product.Images;
+
+				}
+
 			}
 		}
 
-		[Parameter]
 		public Models.Category ProductCategory
 		{
 			get
@@ -54,56 +76,56 @@ namespace LojaVirtual.Pages.Product.Components
 
 				_category = value;
 
-				if (Product.Category != value) Product.Category = value;
-				Product.Category ??= categories[0]; 
-
-				CategoryChange.InvokeAsync(_category);
+				if (Product.Category != value)
+				{
+					_category = value != null && value != new Models.Category() ? value : categories[0];
+					if (Product.Category != _category) Product.Category = _category;
+				}
 			}
-		} 
+		}
 
-		[Parameter]
 		public ICollection<Models.Image> ProductImages
 		{
 			get
 			{
 				_productImages ??= new List<Models.Image>();
-				return _productImages; 
+				return _productImages;
 			}
 			set
 			{
-				if (_productImages != value && value != null)
+				_productImages = value != null && value != new List<Models.Image>() ? value : new List<Models.Image>();
+				if (Product.Images != _productImages) Product.Images = _productImages;
+
+				List<ImageData> tempImgData = new List<ImageData>();
+
+				foreach (var image in ProductImages)
 				{
-					_productImages = value;
-					foreach (var image in ProductImages)
-					{
-						string byte64 = Convert.ToBase64String(image.Data);
-						int extensionIndex = image.ImageName.IndexOf('.') + 1;
-						string extension = image.ImageName.Remove(0, extensionIndex);
-						ImagesData.Add(new ImageData() { name = image.ImageName, string64Data = new string("data:image/" + extension + "; base64," + byte64) });
-					}
+					string byte64 = Convert.ToBase64String(image.Data);
+					int extensionIndex = image.ImageName.IndexOf('.') + 1;
+					string extension = image.ImageName.Remove(0, extensionIndex);
+					tempImgData.Add(new ImageData() { name = image.ImageName, string64Data = new string("data:image/" + extension + "; base64," + byte64) });
 				}
-				ProductImagesChange.InvokeAsync(_productImages);
+
+				if (ImagesData != tempImgData) ImagesData = tempImgData;
 			}
 		}
 
-		[Parameter]
 		public List<ImageData> ImagesData
 		{
 			get
 			{
 				_imagesData ??= new List<ImageData>();
-				return _imagesData; 
+				return _imagesData;
 			}
 			set
 			{
+				_imagesData = value != null && value != new List<ImageData>() ? value : new List<ImageData>();
 
 				if (_imagesData != value && value != null)
 				{
 					_imagesData = value;
-
-					ImagesDataChange.InvokeAsync(_imagesData);
 				}
- 
+
 			}
 		}
 		#endregion
@@ -111,13 +133,7 @@ namespace LojaVirtual.Pages.Product.Components
 
 		#region Events and Delegates
 		[Parameter]
-		public EventCallback<List<ImageData>> ImagesDataChange { get; set; }
-		[Parameter]
-		public EventCallback<Models.Product> ProductChange { get; set; }
-		[Parameter]
-		public EventCallback<Models.Category> CategoryChange { get; set; }
-		[Parameter]
-		public EventCallback<ICollection<Models.Image>> ProductImagesChange { get; set; }
+		public EventCallback<int> ProductIdChange { get; set; }
 		#endregion
 
 
@@ -128,9 +144,8 @@ namespace LojaVirtual.Pages.Product.Components
 			{
 				categories = ctxt.Categories.ToList();
 			}
-		} 
+		}
 		#endregion
-
 
 		#region Methods
 
@@ -152,23 +167,28 @@ namespace LojaVirtual.Pages.Product.Components
 
 				foreach (var image in Product.Images)
 				{
-					ctxt.Images.Add(image);
+					if (ctxt.Images.Any(i => i == image))
+					{
+						ctxt.Images.Update(image);
+					}
+					else
+					{
+						ctxt.Images.Add(image);
+					}
 				}
-
-				Product.Category = ctxt.Categories.FirstOrDefault(c => c.CategoryId == catId);
 
 				//updates category if the product (checks if existent and add if new)
 				if (Product.Category != null)
 				{
 					ctxt.Categories.Update(Product.Category);
 				}
+				//todo: return error
 				else return;
 
 				//update if product has already a id
-				if (Product.ProductId != 0)
+				if (ctxt.Products.Any(p => p == Product))
 				{
 					ctxt.Products.Update(Product);
-
 				}
 				//add a new product if the id is new
 				else
@@ -179,7 +199,7 @@ namespace LojaVirtual.Pages.Product.Components
 				ctxt.SaveChanges();
 			}
 			NavigationManager.NavigateTo("/Product/Index", true);
-		} 
+		}
 
 		#endregion
 

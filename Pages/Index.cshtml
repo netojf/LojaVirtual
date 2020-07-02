@@ -6,31 +6,21 @@
 @{
   ViewData["Title"] = "Home page";
 }
-<div class="row">
-  <h1 class="m-auto"> Bem Vindo!</h1>
+<div class="row h-100 w-100 justify-content-center align-content-center" style="position: absolute;">
+  <h1> Bem Vindo!</h1>
 
 </div>
 
-@{
-  Models.Product p;
-  Models.Category c;
-  ICollection<Models.Image> i;
+@*@{
+
+  int pid;
   using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
   {
-    p = await ctxt.Products.Include(p => p.Category).Include(p => p.Images).FirstOrDefaultAsync();
-    c = p.Category;
-    i = p.Images;
-
-
-
+    pid = await ctxt.Products.Select(p=> p.ProductId).FirstOrDefaultAsync();
   }
 
-  if (p != null)
-  {
+  <component type="typeof(Product.Components.ProductForm)" param-ProductId="@pid" render-mode="ServerPrerendered" />
 
-    <component type="typeof(Product.Components.ProductForm)" param-Product="@p"  param-ProductCategory="@c" render-mode="ServerPrerendered" />
-
-  }
-}
+}*@
 
 

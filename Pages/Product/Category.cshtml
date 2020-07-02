@@ -2,33 +2,44 @@
 @page "{handler?}/{id?}"
 @model LojaVirtual.Pages.Product.CategoryModel
 @{
-    ViewData["Title"] = "Category";
+  ViewData["Title"] = "Category";
 }
-<div class="container">
 
-    <div class="row">
 
-        <div class="col">
+@if (Model.CategoryId != null)
+{
+  <component type="typeof(Components.ProductList)" param-CategoryId="@Model.CategoryId" render-mode="ServerPrerendered" />
+}
 
-            <!-- #region Filters -->
+@*
+  <div class="row">
 
-            <div class="container-fluid row">
+    <div class="col">
 
-            </div>
+      <!-- #region Filters -->
 
-            <!-- #endregion -->
-            <!-- #region ProductCard -->
-            <div class="row">
+      <div class="container-fluid row">
 
-                @foreach (var product in Model.Products)
-                {
-                    @await Html.PartialAsync("Shared/_ProductCard.cshtml", new _ProductCardModel(product), null)
-                }
-            </div>
-            <!-- #endregion -->
-        </div>
+      </div>
+
+      <!-- #endregion -->
+      <!-- #region ProductCard -->
+      <div class="row">
+
+        @foreach (var product in Model.Products)
+        {
+          @await Html.PartialAsync("Shared/_ProductCard.cshtml", new _ProductCardModel(product), null)
+        }
+      </div>
+      <!-- #endregion -->
     </div>
-</div>
+  </div>
+
+*@
+
+
+
+
 
 
 

@@ -1,0 +1,50 @@
+﻿@inherits LoginNavbarBase
+
+<ul class="navbar-nav">
+  @if (LoginManagement.IsLogged)
+  {
+    <li class="d-flex nav-item align-items-center">
+      <p class=" text-light align-middle m-2">Bem Vindo(a)!  @LoginManagement.TempUser.Name!</p>
+    </li>
+
+    //Shopping cart
+    <li class="nav-item m-1 row">
+      <button @onclick="ShoppingCart" class="btn btn-default nav-link text-light">
+        <span style="font-size: 1em;">
+          <i class="fas fa-shopping-cart"></i>
+        </span>
+        Carrinho
+      </button>
+    </li>
+
+    //Account
+    <li class="nav-item m-1 row">
+      <button class="btn btn-defaut nav-link text-light" @onclick="Account">
+        <span style="font-size: 1em;">
+          <i class="fas fa-user"></i>
+        </span>
+        Conta
+      </button>
+    </li>
+
+    //logoff
+    <li class="nav-item m-1 row">
+      <button @onclick="Logoff" class="nav-link text-light btn btn-default" title="Manage">
+        <span style="font-size: 1em;">
+          <i class="fas fa-power-off"></i>
+        </span>Log Off
+      </button>
+    </li>
+  }
+  else
+  {
+    <li class="nav-item">
+      <a class="nav-link text-light" asp-page="/User/Register">Cadastrar</a>
+    </li>
+    <li class="nav-item">
+
+      <LoginModal @ref="LoginModalInstance"></LoginModal>
+      <button class=" btn btn-default nav-link text-light" @onclick="() => LoginModalInstance.Open()">Conectar</button>
+    </li>
+  }
+</ul>

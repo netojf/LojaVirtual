@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace LojaVirtual
@@ -10,7 +6,7 @@ namespace LojaVirtual
 	public static class LoginManagement
 	{
 
-		public static bool IsLogged { get; set; } = false; 
+		public static bool IsLogged { get; set; } = false;
 
 		public static Models.User TempUser { get; set; }
 		public static bool IsAdmin
@@ -47,10 +43,10 @@ namespace LojaVirtual
 			return IsLogged;
 		}
 
-			public static bool Logoff()
-			{
-				return IsLogged = false;
-			}
-
+		public static bool Logoff()
+		{
+			return IsLogged = false;
 		}
+
 	}
+}

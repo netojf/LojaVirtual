@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace LojaVirtual.Models
 {
@@ -15,11 +13,16 @@ namespace LojaVirtual.Models
 		public int? Barcode { get; set; }
 		public string Brand { get; set; }
 		public int? ProductImage { get; set; }
+		[JsonIgnore]
 		public ICollection<Image> Images { get; set; }
+		[JsonIgnore]
 		public ICollection<Product> Products { get; set; }
+		[JsonIgnore]
 		public Category Category { get; set; }
+		[JsonIgnore]
 		public Product ProductPack { get; set; }
-		public ProductOrder ProductOrder { get; set; } 
+		[JsonIgnore]
+		public ProductOrder ProductOrder { get; set; }
 		#endregion
 	}
 }

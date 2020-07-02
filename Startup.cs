@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LojaVirtual.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +10,7 @@ namespace LojaVirtual
 {
 	public class Startup
 	{
-		public static string connectionString {  get; private set; }
+		public static string connectionString { get; private set; }
 
 		public Startup(IConfiguration configuration)
 		{
@@ -32,8 +26,9 @@ namespace LojaVirtual
 		{
 			services.AddSession();
 			services.AddRazorPages();
+
 			services.AddServerSideBlazor();
-			
+
 			services.AddDbContext<LojaVirtualContext>(
 				options => options
 				.UseSqlServer(
@@ -41,9 +36,8 @@ namespace LojaVirtual
 					.GetConnectionString("DefaultConnection")));
 
 			services.AddAuthentication();
-			
 			services.AddAntiforgery();
-			
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

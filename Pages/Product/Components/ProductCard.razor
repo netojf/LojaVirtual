@@ -1,0 +1,157 @@
+﻿@inherits ProductCardBase
+
+<div class="col-lg-4 col-md-6">
+  <div class="card product-card m-2">
+
+    <a @onclick="RedirectToProduct" class="flex-row" style="background-color:transparent; color:#000000; text-decoration:none">
+
+      <!-- #region Image -->
+      @if (Product.ProductImage != null && Product.Images != null)
+      {
+        if (Product.Images.Count > 0)
+        {
+          int imageIndex = (int)Product.ProductImage;
+
+          Models.Image img = Product.Images.ElementAt(imageIndex);
+
+          string extension = Tools.FileTools.GetExtensionByName(img.ImageName);
+
+          string byte64 = Tools.FileTools.GetImageSrc64String(img.Data, extension);
+
+          <img class="card-img-top product-card-image my-2" src="@byte64" alt="">
+        }
+        else
+        {
+          <img class="card-img-top product-card-image my-2" src="http://placehold.it/700x400" alt="">
+        }
+      }
+      else
+      {
+        <img class="card-img-top product-card-image my-2" src="http://placehold.it/700x400" alt="">
+      }
+      <!-- #endregion -->
+      <!-- #region Properties -->
+    </a>
+
+    <div class="card-body ">
+      <div class="d-flex flex-wrap">
+
+        <div class="flex-grow-1">
+          <h4 class="card-title text-black">@Product.Name </h4>
+          <p class="card-text nounderline">@Product.Description</p>
+        </div>
+
+        <div>
+          <h2 class="text-danger">R$ @Product.Price </h2>
+        </div>
+
+      </div>
+
+
+      <div class="row m-2">
+        <button class="btn btn-primary  btn-block" @onclick="AddProductToCart">Adicionar ao Carrinho</button>
+      </div>
+
+      <div class="row m-2">
+        <button class="btn btn-primary   btn-block" @onclick="RedirectToProduct">Visualizar</button>
+      </div>
+
+    </div>
+
+
+
+
+    <!-- #endregion -->
+    <!-- #region Controls -->
+    @*todo: Evaluation *@
+    @*<div class="form-group m-1 row">
+          <button type="submit" asp-page-handler="AddItemToFav"  asp-route-product=@.Product.ProductId class="btn btn-danger mb-1 btn-block">Adicionar aos Favoritos</button>
+      </div>*@
+    <!-- #endregion -->
+    <!-- #region Classification -->
+    @* todo: classification of the products
+      <div class="card-footer">
+          <small class="text-muted">★ ★ ★ ★ ☆</small>
+      </div>
+    *@
+    <!-- #endregion -->
+  </div>
+</div>
+
+
+@switch (Status)
+{
+  case "":
+    break;
+
+  case "Success":
+
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title text-success">Enviado Ao Carrinho</h3>
+            <!-- Button to close the popup -->
+            <button type="button" class="close">
+              <span aria-hidden="true" @onclick="DialogClose">X</span>
+            </button>
+          </div>
+          <!-- Edit form for the current forecast -->
+          <div class="modal-body">
+            <p>modal</p>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    break;
+
+
+  case "LoginError":
+    <LojaVirtual.Pages.User.Components.LoginModal @key="LojaVirtual.Pages.User.Components.LoginNavbar.LoginModalInstance"></LojaVirtual.Pages.User.Components.LoginModal>
+    LojaVirtual.Pages.User.Components.LoginNavbar.LoginModalInstance.Open(); 
+
+    @*<div class="modal" tabindex="-1" style="display:block" role="dialog">
+
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title text-danger">Conecte o Usuário</h3>
+
+            <button type="button" class="close">
+              <span aria-hidden="true"  @onclick="DialogClose">X</span>
+            </button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <p>Conecte sua Conta</p>
+
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>*@
+
+    break;
+
+
+  default:
+
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title text-danger">Error Desconhecido</h3>
+            <button type="button" class="close">
+              <span aria-hidden="true">X</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    break;
+}
