@@ -28,10 +28,5 @@ namespace LojaVirtual.Pages.Product.Components
 		[Parameter]
 		public EventCallback<List<ImageData>> ImagesDataChanged { get; set; }
 
-		public ImageCardBase()
-		{
-		}
-
-
 	}
 }

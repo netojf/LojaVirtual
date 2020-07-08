@@ -27,7 +27,8 @@
                 {
                   foreach (var item in lojaVirtualContext.Categories)
                   {
-                    <a asp-page="/Product/Category" asp-page-handler="Get" asp-route-catId="@item.CategoryId" class="dropdown-item">@item.Name</a>
+                    @*<a asp-page="/Product/Category" asp-page-handler="Get" asp-route-catId="@item.CategoryId" class="dropdown-item">@item.Name</a>*@
+                    <a class="dropdown-item" href="/Product/ProductList/@item.CategoryId">@item.Name</a>
                   }
                 }
               }

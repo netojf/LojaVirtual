@@ -12,6 +12,9 @@ namespace LojaVirtual.Models
 		public double Price { get; set; }
 		public int? Barcode { get; set; }
 		public string Brand { get; set; }
+		/// <summary>
+		/// Index of the Main Product Image
+		/// </summary>
 		public int? ProductImage { get; set; }
 		[JsonIgnore]
 		public ICollection<Image> Images { get; set; }

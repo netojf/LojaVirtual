@@ -30,7 +30,10 @@ namespace LojaVirtual
 		{
 			using Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext();
 			TempUser = await ctxt.Users
-			.SingleOrDefaultAsync(x => x.Name == userName && x.Password == password);
+				.Include(u => u.ShoppingCart)
+				.ThenInclude(s => s.ProductOrders)
+				.ThenInclude(po => po.Products)
+				.SingleOrDefaultAsync(x => x.Name == userName && x.Password == password);
 
 			if (TempUser != null)
 			{

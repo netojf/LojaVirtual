@@ -79,7 +79,7 @@
 </div>
 
 
-@switch (Status)
+@*@switch (Status)
 {
   case "":
     break;
@@ -91,12 +91,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <h3 class="modal-title text-success">Enviado Ao Carrinho</h3>
-            <!-- Button to close the popup -->
             <button type="button" class="close">
               <span aria-hidden="true" @onclick="DialogClose">X</span>
             </button>
           </div>
-          <!-- Edit form for the current forecast -->
           <div class="modal-body">
             <p>modal</p>
             <br />
@@ -111,30 +109,6 @@
   case "LoginError":
     <LojaVirtual.Pages.User.Components.LoginModal @key="LojaVirtual.Pages.User.Components.LoginNavbar.LoginModalInstance"></LojaVirtual.Pages.User.Components.LoginModal>
     LojaVirtual.Pages.User.Components.LoginNavbar.LoginModalInstance.Open(); 
-
-    @*<div class="modal" tabindex="-1" style="display:block" role="dialog">
-
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title text-danger">Conecte o Usuário</h3>
-
-            <button type="button" class="close">
-              <span aria-hidden="true"  @onclick="DialogClose">X</span>
-            </button>
-
-          </div>
-
-          <div class="modal-body">
-
-            <p>Conecte sua Conta</p>
-
-            <br />
-          </div>
-        </div>
-      </div>
-    </div>*@
-
     break;
 
 
@@ -144,9 +118,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title text-danger">Error Desconhecido</h3>
+            <h3 class="modal-title text-danger">Error Desconhecido @Status</h3>
             <button type="button" class="close">
-              <span aria-hidden="true">X</span>
+              <span aria-hidden="true" @onclick="DialogClose">X</span>
             </button>
           </div>
         </div>
@@ -154,4 +128,4 @@
     </div>
 
     break;
-}
+}*@

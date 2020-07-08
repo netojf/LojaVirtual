@@ -1,5 +1,188 @@
-﻿<h3>ProductView</h3>
+﻿@page "/Product/ProductView/{Id:int}"
+@inherits ProductViewBase
+@using Tools;
 
-@code {
+@* Must *@
+@* todo: Carousel of product Images *@
+@* todo: Button Events *@
+@* todo: Layout Upgrade *@
 
-}
+@* Desirable *@
+@* todo: User Comments and Evaluation *@
+@* todo: Localization *@
+@*
+  todo: Generalization of the Product model to object and utilization
+  of EfTools to extract the wanted properties
+*@
+
+<div class="container">
+  <div class="row w-100">
+
+    <div class="card">
+
+
+      <!-- #region ImageCarousel -->
+      <div id="ItemCarrousel" class="carousel slide card-img-top" data-ride="carousel">
+        <div class="carousel-inner">
+
+          @try
+          {
+            int imageIndex = (int)Product.ProductImage;
+            var img = Product.Images.ElementAt(imageIndex);
+            string byte64 = FileTools.GetImageSrc64String(img.Data, FileTools.GetExtensionByName(img.ImageName));
+
+            <div class="carousel-item active">
+              <img class="d-block w-100" src="byte64" alt="First slide">
+            </div>
+          }
+          catch (Exception ex)
+          {
+
+            <h2 class="text-muted">@ex.Message</h2>
+          }
+
+          @try
+          {
+            foreach (var (item, index) in Product.Images.Select((value, i) => (value, i)))
+            {
+              if (index == Product?.ProductImage)
+              {
+                continue;
+              }
+              else
+              {
+                string byte64 = FileTools.GetImageSrc64String(item.Data, FileTools.GetExtensionByName(item.ImageName));
+
+                <div class="carousel-item active">
+                  <img class="d-block w-100" src="byte64" alt="SecondarySlydes">
+                </div>
+              }
+            }
+          }
+          catch (Exception ex)
+          {
+            <h2 style="color:red"> @ex.Message </h2>
+          }
+
+          <a class="carousel-control-prev" href="#ItemCarrousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#ItemCarrousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="row card-body">
+        <div class="card col-sm-9 ">
+          <div class="m-4">
+            <h3 class="card-title ">@Product.Name</h3>
+            <p class="card-text">@Product.Description</p>
+            <h4>R$ @Product.Price</h4>
+          </div>
+        </div>
+
+        <div class="card col-sm m-0 p-0">
+          <form class="card-body m-0" method="post">
+
+            <div class="card-body">
+              <div class="row"><label>Quantidade</label></div>
+              <div class="row">
+                <input @bind-value="@Quantity" type="number" class="form-control col" min="1">
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <button type="submit" @onclick="AddToCart" class="btn btn-primary p-2 m-1 col">Adicionar ao Carrinho</button>
+              </div>
+              <div class="row">
+                <button type="submit" @onclick="Buy" class="btn btn-success p-4 m-1 col">Comprar</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- #region Related  -->
+    <div class="container my-5">
+      <h3 class="my-4">Relacionados</h3>
+      <div class="row align-items-center">
+        <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
+          <a href="#" style="color:#000000; text-decoration:none">
+
+            <img class="img-fluid" src="http://placehold.it/300x200" alt="">
+
+            <div class="card-body">
+              <h3 class="card-title">Title</h3>
+              <h4 class="card-text">R$ value</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
+          <a href="#" style="color:#000000; text-decoration:none">
+
+            <img class="img-fluid" src="http://placehold.it/300x200" alt="">
+
+            <div class="card-body">
+              <h3 class="card-title">Title</h3>
+              <h4 class="card-text">R$ value</h4>
+            </div>
+
+          </a>
+        </div>
+        <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
+          <a href="#" style="color:#000000; text-decoration:none">
+
+            <img class="img-fluid" src="http://placehold.it/300x200" alt="">
+
+            <div class="card-body">
+              <h3 class="card-title">Title</h3>
+              <h4 class="card-text">R$ value</h4>
+            </div>
+
+          </a>
+        </div>
+
+
+      </div>
+
+    </div>
+    <!-- #endregion -->
+    <!-- #region Product Review -->
+
+    <div class="card card-outline-secondary my-4">
+      <div class="card-header">
+        Comentários
+      </div>
+
+      <div class="card-body">
+        <form action="/" method="post">
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Digite seu Comentário Aqui!</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+        <hr>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+        <hr>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+        <hr>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+
+
+      </div>
+    </div>
+
+    <!-- #endregion -->
+
+  </div>
+</div>
