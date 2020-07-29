@@ -1,0 +1,35 @@
+﻿@inherits SimilarProductsBase
+
+
+	<div class="row w-100">
+		<h3 class="my-1">Relacionados</h3>
+
+
+			@if (SimilarProducts != null || SimilarProducts?.Count != 0)
+			{
+				@ContentTemplate(SimilarProducts)
+			}
+			else if(SimilarProducts?.Count == 0)
+			{
+				if (EmptyListTemplate != null)
+				{
+					@EmptyListTemplate
+				}
+				else
+				{
+					<h2>Não há produtos Similares</h2>
+				}
+			}
+			else if (SimilarProducts == null)
+			{
+				if (LoadingTemplate != null)
+				{
+					@LoadingTemplate
+				}
+				else
+				{
+					<h2>Carregando</h2>
+				}
+			}
+
+	</div>

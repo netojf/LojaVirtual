@@ -1,0 +1,35 @@
+﻿@inherits ItemCardMinBase
+@using MecaDevToolkit;
+@using Tools;
+@using System;
+
+
+	<div @onclick="RedirectToItem" class="card @MainClass">
+
+		@*<Carousel T="Models.Image" ContentList="ImageList">
+			<ContentTemplate Context="item">
+				@{
+					string byte64 = FileTools
+						.GetImageSrc64String(item.Data, FileTools.GetExtensionByName(item.ImageName));
+
+					<img class="@ImgClass" src="@byte64" alt="slide" style="@ImgStyle">
+				}
+			</ContentTemplate>
+
+		</Carousel>*@
+
+		@{
+			string byte64 = FileTools
+						.GetImageSrc64String(ImageList[0].Data, FileTools.GetExtensionByName(ImageList[0].ImageName));
+
+			<img class="@ImgClass" src="@byte64" alt="slide" style="@ImgStyle">
+		}
+
+
+		<div class="card-body @CardBodyClass" style="@CardBodyStyle">
+			<h3 class="card-title @CardTitleClass" style="@CardTitleStyle">@Title</h3>
+			<h4 class="card-text @CardTextClass" style="@CardTextStyle">R$ @Price</h4>
+		</div>
+
+
+	</div>

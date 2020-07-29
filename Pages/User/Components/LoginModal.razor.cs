@@ -55,7 +55,7 @@ namespace LojaVirtual.Pages.User.Components
 			ModalDisplay = "none";
 			ModalClass = "";
 			ShowBackdrop = false;
-			NavigationManager.NavigateTo(NavigationManager.Uri, true);
+			//NavigationManager.NavigateTo(NavigationManager.Uri, true);
 			StateHasChanged();
 		}
 
@@ -71,6 +71,7 @@ namespace LojaVirtual.Pages.User.Components
 					//todo: this message
 					StatusMessage = "Conexão Efetuada com Sucesso!";
 					Close();
+					NavigationManager.NavigateTo(NavigationManager.Uri, true);
 
 				}
 				else

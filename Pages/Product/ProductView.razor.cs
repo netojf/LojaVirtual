@@ -2,6 +2,11 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using MecaDevToolkit;
+using DocumentFormat.OpenXml.Office.CustomUI;
+using System;
 
 namespace LojaVirtual.Pages.Product
 {
@@ -63,5 +68,6 @@ namespace LojaVirtual.Pages.Product
 		{
 
 		}
+
 	}
 }

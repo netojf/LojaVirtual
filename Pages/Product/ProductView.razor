@@ -1,6 +1,8 @@
 ﻿@page "/Product/ProductView/{Id:int}"
 @inherits ProductViewBase
 @using Tools;
+@using MecaDevToolkit;
+@using LojaVirtual.Pages.Product.Components;
 
 @* Must *@
 @* todo: Carousel of product Images *@
@@ -11,178 +13,175 @@
 @* todo: User Comments and Evaluation *@
 @* todo: Localization *@
 @*
-  todo: Generalization of the Product model to object and utilization
-  of EfTools to extract the wanted properties
+	todo: Generalization of the Product model to object and utilization
+	of EfTools to extract the wanted p roperties
 *@
 
 <div class="container">
-  <div class="row w-100">
+	<div class="d-flex my-2">
 
-    <div class="card">
+		<!-- #region ProductInfo -->
+		<div class="card p-2 w-100">
 
+			<div class="card-body">
 
-      <!-- #region ImageCarousel -->
-      <div id="ItemCarrousel" class="carousel slide card-img-top" data-ride="carousel">
-        <div class="carousel-inner">
+				<div class="row">
 
-          @try
-          {
-            int imageIndex = (int)Product.ProductImage;
-            var img = Product.Images.ElementAt(imageIndex);
-            string byte64 = FileTools.GetImageSrc64String(img.Data, FileTools.GetExtensionByName(img.ImageName));
+					@* Carousel *@
+					<div class="col-lg-9">
+						<Carousel T="Models.Image" ContentList="Product.Images.ToList()" ActiveItemIndex="((int)Product.ProductImage)">
 
-            <div class="carousel-item active">
-              <img class="d-block w-100" src="byte64" alt="First slide">
-            </div>
-          }
-          catch (Exception ex)
-          {
+							<ContentTemplate Context="item">
+								@{
+									string byte64 = FileTools.GetImageSrc64String(item.Data, FileTools.GetExtensionByName(item.ImageName));
+									<img class="w-100" src="@byte64" alt="First slide" style="height:400px; object-fit: contain">
+								}
+							</ContentTemplate>
 
-            <h2 class="text-muted">@ex.Message</h2>
-          }
+							<CaptionTemplate>
+								<div class="carousel-caption d-none d-md-block">
+									<h5 class="text-danger">afafdf</h5>
+								</div>
+							</CaptionTemplate>
 
-          @try
-          {
-            foreach (var (item, index) in Product.Images.Select((value, i) => (value, i)))
-            {
-              if (index == Product?.ProductImage)
-              {
-                continue;
-              }
-              else
-              {
-                string byte64 = FileTools.GetImageSrc64String(item.Data, FileTools.GetExtensionByName(item.ImageName));
+							<ControlsTemplate Context="carousel">
+								<a class="carousel-control-prev" href="@(string.Format("#" + @carousel.Id))" role="button" data-slide="prev">
+									<span class="fas fa-less-than" aria-hidden="true" style="color: chocolate;"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="@(string.Format("#" + @carousel.Id))" role="button" data-slide="next">
+									<span class="fas fa-greater-than" aria-hidden="true" style="color: chocolate; "></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</ControlsTemplate>
 
-                <div class="carousel-item active">
-                  <img class="d-block w-100" src="byte64" alt="SecondarySlydes">
-                </div>
-              }
-            }
-          }
-          catch (Exception ex)
-          {
-            <h2 style="color:red"> @ex.Message </h2>
-          }
+						</Carousel>
+					</div>
 
-          <a class="carousel-control-prev" href="#ItemCarrousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#ItemCarrousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div>
+					@* User Controls *@
+					<div class="card col-lg my-lg-0 my-3">
+						<form class="card-body" method="post">
+							<div class="card-body">
+								<div class="row"><label>Quantidade</label></div>
+								<div class="row">
+									<input @bind-value="@Quantity" type="number" class="form-control col" min="1">
+								</div>
+							</div>
+							<div class="card-body">
+								<button type="submit" @onclick="AddToCart" class="btn btn-primary btn-block p-2 m-1">Adicionar ao Carrinho</button>
+								<button type="submit" @onclick="Buy" class="btn btn-success btn-block p-4 m-1">Comprar</button>
+							</div>
+						</form>
+					</div>
 
-      <div class="row card-body">
-        <div class="card col-sm-9 ">
-          <div class="m-4">
-            <h3 class="card-title ">@Product.Name</h3>
-            <p class="card-text">@Product.Description</p>
-            <h4>R$ @Product.Price</h4>
-          </div>
-        </div>
+				</div>
+			</div>
 
-        <div class="card col-sm m-0 p-0">
-          <form class="card-body m-0" method="post">
+			@* Product Details *@
+			<div class="card-body m-2">
+				<h3 class="card-title h1 m-2">@Product.Name</h3>
+				<p class="card-text">@Product.Description</p>
+				<h4>R$ @Product.Price</h4>
+			</div>
 
-            <div class="card-body">
-              <div class="row"><label>Quantidade</label></div>
-              <div class="row">
-                <input @bind-value="@Quantity" type="number" class="form-control col" min="1">
-              </div>
-            </div>
-
-            <div class="card-body">
-              <div class="row">
-                <button type="submit" @onclick="AddToCart" class="btn btn-primary p-2 m-1 col">Adicionar ao Carrinho</button>
-              </div>
-              <div class="row">
-                <button type="submit" @onclick="Buy" class="btn btn-success p-4 m-1 col">Comprar</button>
-              </div>
-            </div>
-
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- #region Related  -->
-    <div class="container my-5">
-      <h3 class="my-4">Relacionados</h3>
-      <div class="row align-items-center">
-        <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
-          <a href="#" style="color:#000000; text-decoration:none">
-
-            <img class="img-fluid" src="http://placehold.it/300x200" alt="">
-
-            <div class="card-body">
-              <h3 class="card-title">Title</h3>
-              <h4 class="card-text">R$ value</h4>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
-          <a href="#" style="color:#000000; text-decoration:none">
-
-            <img class="img-fluid" src="http://placehold.it/300x200" alt="">
-
-            <div class="card-body">
-              <h3 class="card-title">Title</h3>
-              <h4 class="card-text">R$ value</h4>
-            </div>
-
-          </a>
-        </div>
-        <div class="col-md-3 col-sm-6 m-2 p-2 card text-center ">
-          <a href="#" style="color:#000000; text-decoration:none">
-
-            <img class="img-fluid" src="http://placehold.it/300x200" alt="">
-
-            <div class="card-body">
-              <h3 class="card-title">Title</h3>
-              <h4 class="card-text">R$ value</h4>
-            </div>
-
-          </a>
-        </div>
+		</div>
 
 
-      </div>
-
-    </div>
-    <!-- #endregion -->
-    <!-- #region Product Review -->
-
-    <div class="card card-outline-secondary my-4">
-      <div class="card-header">
-        Comentários
-      </div>
-
-      <div class="card-body">
-        <form action="/" method="post">
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Digite seu Comentário Aqui!</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+		<!-- #endregion -->
+	</div>
 
 
-      </div>
-    </div>
+	<!-- #region Related  -->
+	@{
+		var similarData = Product.GetSimilarData(9);
+		var chunks = similarData.ChunkBy(3);
+		Console.WriteLine();
 
-    <!-- #endregion -->
+		<Carousel T="List<Models.Product>" ContentList="@chunks">
 
-  </div>
+			<ContentTemplate Context="chunkList">
+				<div class="justify-content-center align-items-center d-flex">
+					@foreach (var item in chunkList)
+					{
+						<ItemCardMin CardBodyClass="justify-content-center align-items-center text-center" Title="@item.Name" ImageList="@item.Images.ToList()" MainClass="m-2"  Price="@item.Price" ImgClass="d-block w-100 my-1" ImgStyle="height:100px; object-fit: contain">
+						</ItemCardMin>
+					}
+				</div>
+			</ContentTemplate>
+
+			<ControlsTemplate Context="carousel">
+				<a class="carousel-control-prev" href="@(string.Format("#" + carousel.Id))" role="button" data-slide="prev">
+					<span class="fas fa-less-than" aria-hidden="true" style="color: chocolate;"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="@(string.Format("#" + carousel.Id))" role="button" data-slide="next">
+					<span class="fas fa-greater-than" aria-hidden="true" style="color: chocolate; "></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</ControlsTemplate>
+
+		</Carousel>
+
+		@*<SimilarProducts @ref="sm" Product="@Product">
+				<ContentTemplate Context="products">
+					@{
+						var chunks = products.ChunkBy(3);
+						<Carousel T="List<Models.Product>" Id="RelatedDataCarousel" ContentList="@chunks">
+							<ContentTemplate Context="chunkList">
+								<div class="justify-content-center align-items-center d-flex">
+									@foreach (var item in chunkList)
+									{
+										<ItemCardMin Title="@item.Name" ImageList="@item.Images.ToList()" CarouselId="@(item.ProductId.ToString() + "Carousel")" Price="@item.Price" MainClass="m-2 p-2 card text-center" ImgClass="d-block w-100" ImgStyle="height:100px; object-fit: contain"></ItemCardMin>
+									}
+								</div>
+							</ContentTemplate>
+							<ControlsTemplate Context="carousel">
+								<a class="carousel-control-prev" href="@(string.Format("#" + @carousel.Id.ToString()))" role="button" data-slide="prev">
+									<span class="fas fa-less-than" aria-hidden="true" style="color: chocolate;"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="@(string.Format("#" + @carousel.Id.ToString()))" role="button" data-slide="next">
+									<span class="fas fa-greater-than" aria-hidden="true" style="color: chocolate; "></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</ControlsTemplate>
+						</Carousel>
+					}
+				</ContentTemplate>
+			</SimilarProducts>*@
+
+	}
+
+
+	<!-- #region Product Review -->
+	<div class="row w-100">
+		<div class="card card-outline-secondary my-4">
+			<div class="card-header">
+				Comentários
+			</div>
+
+			<div class="card-body">
+				<form action="/" method="post">
+					<div class="form-group">
+						<label for="exampleFormControlTextarea1">Digite seu Comentário Aqui!</label>
+						<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">Enviar</button>
+				</form>
+				<hr>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+				<small class="text-muted">Posted by Anonymous on 3/1/17</small>
+				<hr>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+				<small class="text-muted">Posted by Anonymous on 3/1/17</small>
+				<hr>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+				<small class="text-muted">Posted by Anonymous on 3/1/17</small>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- #endregion -->
+
 </div>

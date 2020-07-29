@@ -1,26 +1,25 @@
 ﻿@page
 
 @using Microsoft.EntityFrameworkCore;
+@using MecaDevRazorComponents.TestComponent;
 
 @model IndexModel
 @{
   ViewData["Title"] = "Home page";
 }
-<div class="row h-100 w-100 justify-content-center align-content-center" style="position: absolute;">
+
+@*<div class="row h-100 w-100 justify-content-center align-content-center" style="position: absolute;">
   <h1> Bem Vindo!</h1>
+
+  </div>*@
+<div class="row h-100 w-100">
+  @{
+    
+  }
 
 </div>
 
-@*@{
 
-  int pid;
-  using (Models.LojaVirtualContext ctxt = new Models.LojaVirtualContext())
-  {
-    pid = await ctxt.Products.Select(p=> p.ProductId).FirstOrDefaultAsync();
-  }
 
-  <component type="typeof(Product.Components.ProductForm)" param-ProductId="@pid" render-mode="ServerPrerendered" />
-
-}*@
 
 

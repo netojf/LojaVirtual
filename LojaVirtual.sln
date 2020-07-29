@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtual", "LojaVirtual.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaVirtualTests", "..\LojaVirtualTests\LojaVirtualTests.csproj", "{DF30B2D6-F0B2-4610-942B-4BAF6CC921E9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MecaDevToolkit", "..\MecaDevToolkit\MecaDevToolkit.csproj", "{3A5AD47E-DBE5-4980-8294-99D09DE13D24}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MecaDevRazorComponents", "..\MecaDevRazorComponents\MecaDevRazorComponents.csproj", "{CA715C4C-E833-4D46-B0D5-FD3230E3D520}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DF30B2D6-F0B2-4610-942B-4BAF6CC921E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF30B2D6-F0B2-4610-942B-4BAF6CC921E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF30B2D6-F0B2-4610-942B-4BAF6CC921E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A5AD47E-DBE5-4980-8294-99D09DE13D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A5AD47E-DBE5-4980-8294-99D09DE13D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A5AD47E-DBE5-4980-8294-99D09DE13D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A5AD47E-DBE5-4980-8294-99D09DE13D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA715C4C-E833-4D46-B0D5-FD3230E3D520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA715C4C-E833-4D46-B0D5-FD3230E3D520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA715C4C-E833-4D46-B0D5-FD3230E3D520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA715C4C-E833-4D46-B0D5-FD3230E3D520}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

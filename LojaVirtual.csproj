@@ -27,6 +27,11 @@
     <Folder Include="Pages\User\Shared\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MecaDevRazorComponents\MecaDevRazorComponents.csproj" />
+    <ProjectReference Include="..\MecaDevToolkit\MecaDevToolkit.csproj" />
+  </ItemGroup>
+
 
 
 </Project>
